@@ -7,11 +7,11 @@ class Products extends Component {
     return (
       <div className={styles.products}>
         <div className={styles["img-box"]}>
-          <img src="https://via.placeholder.com/356" alt="/" />
-          <span className={styles.cartIcon}>{cartIcon}</span>
+          <img src="https://via.placeholder.com/300" alt="/" />
+          <button className={styles.cartIcon}>{cartIcon}</button>
         </div>
-        <p>{this.props.id}</p>
-        <span>$50.00</span>
+        <p className={styles["product-name"]}>{this.props.id}</p>
+        <span className={styles.price}>$50.00</span>
       </div>
     )
   }
