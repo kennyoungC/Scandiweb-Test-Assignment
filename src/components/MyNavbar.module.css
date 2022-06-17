@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: flex-start;
   max-width: 1440px;
-  padding: 24px 12px;
+  padding: 24px 0;
 }
 
 .navLinks {
@@ -21,6 +21,7 @@
 }
 .navLinks li:nth-child(1) {
   border-bottom: 2px solid #5aee87;
+  color: #5aee87;
 }
 .logo {
   background: linear-gradient(316.98deg, #52d67a 16.88%, #5aee87 84.04%);
@@ -62,7 +63,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-35%, 0%);
-  animation: 0.4s ease-out;
+  animation: all 0.4s ease-out;
 }
 .currencyList li {
   width: 48px;

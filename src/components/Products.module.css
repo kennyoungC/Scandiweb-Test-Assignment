@@ -1,0 +1,31 @@
+.products {
+  /* border: 1px solid red; */
+  padding: 12px;
+  max-width: fit-content;
+  max-width: -moz-fit-content;
+}
+.products:hover {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+.img-box {
+  position: relative;
+}
+.img-box img {
+  width: 356px;
+  height: 356px;
+}
+.cartIcon {
+  position: absolute;
+  padding: 6px 8px;
+  background-color: #5ece7b;
+  border-radius: 50%;
+  color: #fff;
+  bottom: -3%;
+  right: 5%;
+  cursor: pointer;
+  opacity: 0;
+  animation: all 0.3s ease-out;
+}
+.products:hover .cartIcon {
+  opacity: 1;
+}

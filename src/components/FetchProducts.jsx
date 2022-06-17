@@ -70,8 +70,7 @@ export default connect(null, mapDispatchToProps)(FetchProducts)
 
 const Container = styled.div`
   background-color: white;
-  height: 100vh;
-  max-width: 1220px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 48px;
 `
