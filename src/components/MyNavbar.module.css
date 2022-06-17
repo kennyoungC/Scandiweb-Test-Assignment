@@ -1,0 +1,93 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1440px;
+  padding: 24px 12px;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+.navLinks li {
+  text-transform: uppercase;
+  /* border-bottom: 2px solid #5aee87; */
+  padding: 0 12px 16px 12px;
+  cursor: pointer;
+}
+.navLinks li:nth-child(1) {
+  border-bottom: 2px solid #5aee87;
+}
+.logo {
+  background: linear-gradient(316.98deg, #52d67a 16.88%, #5aee87 84.04%);
+  padding: 6px;
+  color: #fff;
+  border-radius: 6px;
+}
+.navLinks li:hover {
+  color: #5aee87;
+}
+p {
+  margin: 0;
+}
+.currencyMenu {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.currency {
+  font-weight: bold;
+  font-size: 20px;
+}
+.currencyList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-35%, 0%);
+  animation: 0.4s ease-out;
+}
+.currencyList li {
+  width: 48px;
+  padding: 8px 24px;
+  cursor: pointer;
+}
+.currencyList li:hover {
+  background-color: #ccc;
+}
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cart {
+  position: relative;
+}
+.cartNum {
+  position: absolute;
+  padding: 0px 4px 1px 4px;
+  font-size: 12px;
+  border-radius: 50%;
+  color: #fff;
+  background-color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(10%, -100%);
+}

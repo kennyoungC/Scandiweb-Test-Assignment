@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
+import React, { Component } from "react"
+import FetchProducts from "./components/FetchProducts"
+import { closeCurrencyMenu } from "./store/actions"
+import { connect } from "react-redux"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "http://localhost:4000/",
+})
+
+const mapStateToProps = (state) => ({
+  isOpen: state.currency.isOpen,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  closeCurrencyMenu: () => {
+    dispatch(closeCurrencyMenu())
+  },
+})
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.bodyRef = React.createRef()
+  }
+
+  componentDidMount = () => {
+    const isClicked = (e) => {
+      if (this.props.isOpen && this.bodyRef.current.contains(e.target)) {
+        this.props.closeCurrencyMenu()
+      }
+    }
+    isClicked()
+    document.body.addEventListener("click", isClicked)
+
+    return () => document.body.removeEventListener("click", isClicked)
+  }
+  render() {
+    return (
+      <div ref={this.bodyRef}>
+        <ApolloProvider client={client}>
+          <FetchProducts client={client} />
+        </ApolloProvider>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App)
