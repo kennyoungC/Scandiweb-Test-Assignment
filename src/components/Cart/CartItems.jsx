@@ -4,39 +4,45 @@ import styles from "./CartItems.module.css"
 class CartItems extends Component {
   render() {
     return (
-      <li>
-        <div className={styles.layout}>
-          <div>
-            <p>
-              Apollo <br /> Running Short
-            </p>
-            <p>$50.00</p>
-            <div>
-              <p>SIZE</p>
+      <>
+        <li>
+          <div className={styles.layout}>
+            <div className={styles["first-row"]}>
+              <span>
+                <p className={styles.bold}>Apollo</p>
+                <p>Running Short</p>
+              </span>
+              <p className={styles.bold}>$50.00</p>
               <div>
-                <span>M</span>
-                <span>M</span>
-                <span>M</span>
-                <span>M</span>
+                <p className={styles.bold}>SIZE:</p>
+                <div className={styles["size-box"]}>
+                  <button>XS</button>
+                  <button>S</button>
+                  <button>M</button>
+                  <button>L</button>
+                </div>
+              </div>
+              <div>
+                <p className={styles.bold}>COLOR:</p>
+                <div className={styles["color-box"]}>
+                  <button></button>
+                  <button></button>
+                  <button></button>
+                </div>
               </div>
             </div>
-            <div>
-              <p>COLOR</p>
-              <div>
-                <span></span>
-                <span></span>
-                <span></span>
+            <div className={styles["second-row"]}>
+              <div className={styles["action-btn"]}>
+                <button>+</button>
+                <span>1</span>
+                <button>-</button>
               </div>
+              <img src="http://via.placeholder.com/150" alt="" />
             </div>
           </div>
-          <div>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit
-              numquam unde aliquid et iusto?
-            </p>
-          </div>
-        </div>
-      </li>
+        </li>
+        <hr />
+      </>
     )
   }
 }

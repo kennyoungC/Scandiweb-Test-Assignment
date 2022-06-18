@@ -1,0 +1,21 @@
+.cart-list {
+  list-style: none;
+  padding: 12px 0;
+}
+.order {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.order span {
+  font-weight: bold;
+}
+.order-btn {
+  padding: 16px 32px;
+  width: 200px;
+  height: 43px;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 12px 0;
+  background: #5ece7b;
+}
