@@ -1,3 +1,4 @@
+import { ADD_TO_CART } from "../reducers/CartReducer"
 import {
   CLOSE_CURRENCY_MENU,
   TOGGLE_CURRENCY_MENU,
@@ -17,4 +18,8 @@ export const toggleCurrencyMenu = () => ({
 })
 export const closeCurrencyMenu = () => ({
   type: CLOSE_CURRENCY_MENU,
+})
+export const addToCart = (product) => ({
+  type: ADD_TO_CART,
+  payload: product,
 })

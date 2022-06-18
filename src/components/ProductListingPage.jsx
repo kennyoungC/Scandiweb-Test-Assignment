@@ -16,7 +16,7 @@ class ProductListingPage extends Component {
         <Row>
           {this.props.allProducts.map((product) => (
             <div key={product.id}>
-              <Products id={product.id} />
+              <Products product={product} id={product.id} />
             </div>
           ))}
         </Row>

@@ -1,12 +1,14 @@
 import React, { Component } from "react"
 import styles from "./MyNavbar.module.css"
-
+import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { toggleCurrencyMenu } from "../store/actions"
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
 
 const mapStateToProps = (state) => ({
   isOpen: state.currency.isOpen,
+  currency: state.productList.products.products,
+  totalCartItems: state.cart.totalQuantity,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,6 +16,22 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 class MyNavbar extends Component {
+  showPrice = () => {
+    // const prices = this.props.currency
+    // console.log(prices)
+    // let newObj = []
+    // for (const key in prices) {
+    //   newObj.push({
+    //     // name: prices[key].name,
+    //     price: prices[key].prices,
+    //   })
+    // }
+    // console.log(newObj)
+  }
+  // componentDidMount() {
+  //  this.showPrice()
+  // }
+
   render() {
     return (
       <div className={styles.navbar}>
@@ -50,8 +68,12 @@ class MyNavbar extends Component {
             </ul>
           </div>
           <div className={styles.cart}>
-            <button>{cartIcon}</button>
-            <span className={styles.cartNum}>3</span>
+            <Link to={"/cart"}>
+              <button>{cartIcon}</button>
+              <span className={styles.cartNum}>
+                {this.props.totalCartItems}
+              </span>
+            </Link>
           </div>
         </div>
       </div>

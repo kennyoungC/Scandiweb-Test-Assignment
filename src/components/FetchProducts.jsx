@@ -5,6 +5,8 @@ import { getAllProducts, setError } from "../store/actions"
 import ProductListingPage from "./ProductListingPage"
 import MyNavbar from "./MyNavbar"
 import styled from "styled-components"
+import { Route, Routes } from "react-router-dom"
+import CartPage from "../pages/CartPage"
 
 const mapDispatchToProps = (dispatch) => ({
   getProducts: (product) => dispatch(getAllProducts(product)),
@@ -60,7 +62,10 @@ class FetchProducts extends Component {
     return (
       <Container>
         <MyNavbar />
-        <ProductListingPage />
+        <Routes>
+          <Route path="/" element={<ProductListingPage />} />
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
       </Container>
     )
   }
