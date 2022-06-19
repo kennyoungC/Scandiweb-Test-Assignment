@@ -31,7 +31,7 @@
 .color-box button {
   height: 36px;
   width: 36px;
-  background-color: #1d1f22;
+  /* background-color: #1d1f22; */
   padding: 4px 9px;
 }
 .color-box p {

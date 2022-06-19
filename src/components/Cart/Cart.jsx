@@ -11,8 +11,8 @@ class Cart extends Component {
     return (
       <div>
         <ul className={styles["cart-list"]}>
-          {this.props.cartItems.map((cart) => (
-            <CartItems key={cart.id} />
+          {this.props.cartItems.map((cart, key) => (
+            <CartItems index={key} item={cart} key={cart.id} />
           ))}
         </ul>
         <div>

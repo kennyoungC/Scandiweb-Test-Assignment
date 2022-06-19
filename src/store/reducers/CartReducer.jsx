@@ -1,4 +1,5 @@
 export const ADD_TO_CART = "ADD_TO_CART"
+export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM"
 const initialState = {
   cartItems: [],
   totalQuantity: 0,
@@ -12,14 +13,15 @@ const CartReducer = (state = initialState, action) => {
         (product) => product.id === newProduct.id
       )
       const existingProduct = state.cartItems[existingProductIndex]
-      let updatedItems
+      let addedItems
       if (existingProduct) {
         const updatedProduct = {
           ...existingProduct,
+
           amount: existingProduct.prices.amount + newProduct.prices.amount,
         }
-        updatedItems = [...state.cartItems]
-        updatedItems[existingProductIndex] = updatedProduct
+        addedItems = [...state.cartItems]
+        addedItems[existingProductIndex] = updatedProduct
 
         // newProduct = {
         //   name: newProduct.name,
@@ -37,12 +39,26 @@ const CartReducer = (state = initialState, action) => {
         //   totalQuantity: state.totalQuantity + 1,
         // }
       } else {
-        updatedItems = [...state.cartItems, newProduct]
+        addedItems = [...state.cartItems, newProduct]
       }
       return {
         ...state,
-        cartItems: updatedItems,
+        cartItems: addedItems,
         totalQuantity: state.totalQuantity + 1,
+      }
+
+    case UPDATE_CART_ITEM:
+      let updatedProduct = payload
+      const existingUpdatedProductIndex = state.cartItems.findIndex(
+        (product) => product.id === updatedProduct.id
+      )
+      // const existingUpdatedProduct =
+      //   state.cartItems[existingUpdatedProductIndex]
+      let updatedItems = [...state.cartItems]
+      updatedItems[existingUpdatedProductIndex] = updatedProduct
+
+      return {
+        cartItems: updatedItems,
       }
     default:
       return state

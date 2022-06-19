@@ -4,13 +4,26 @@ import { cartIcon } from "./UI/Icons"
 import { connect } from "react-redux"
 import { addToCart } from "../store/actions"
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  currency: state.currency.currency,
+})
 
 const mapDispatchToProps = (dispatch) => ({
   addItemsToCart: (item) => dispatch(addToCart(item)),
 })
 
 class Products extends Component {
+  getPriceLabel = (prices) => {
+    let price_ = 0
+    prices.forEach((price) => {
+      if (price.currency.label === this.props.currency.label) {
+        price_ = price.currency.symbol + price.amount
+        return
+      }
+    })
+    return price_
+  }
+
   render() {
     return (
       <div className={styles.products}>
@@ -24,7 +37,9 @@ class Products extends Component {
           </button>
         </div>
         <p className={styles["product-name"]}>{this.props.product.name}</p>
-        <span className={styles.price}>$50.00</span>
+        <span className={styles.price}>
+          {this.getPriceLabel(this.props.product.prices)}
+        </span>
       </div>
     )
   }

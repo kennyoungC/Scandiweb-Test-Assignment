@@ -1,20 +1,22 @@
-import { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component } from "react"
 import styled from "styled-components"
-import Products from "./Products"
+
+import { connect } from "react-redux"
+import Products from "../components/Products"
 
 const mapStateToProps = (state) => ({
-  allProducts: state.productList.products.products || [],
-  category: state.productList.products.name,
+  clothesProducts: state.productList.products.products.filter(
+    (prod) => prod.category === "clothes"
+  ),
 })
 
-class ProductListingPage extends Component {
+class ClothesPage extends Component {
   render() {
     return (
       <div>
-        <h1 className="category"> {this.props.category}</h1>
+        <h1 className="category"> {this.props.clothesProducts[0].category}</h1>
         <Row>
-          {this.props.allProducts.map((product) => (
+          {this.props.clothesProducts.map((product) => (
             <div key={product.id}>
               <Products product={product} id={product.id} />
             </div>
@@ -25,7 +27,7 @@ class ProductListingPage extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ProductListingPage)
+export default connect(mapStateToProps)(ClothesPage)
 const Row = styled.div`
   display: grid;
   align-items: center;

@@ -7,6 +7,8 @@ import MyNavbar from "./MyNavbar"
 import styled from "styled-components"
 import { Route, Routes } from "react-router-dom"
 import CartPage from "../pages/CartPage"
+import TechPage from "../pages/TechPage"
+import ClothesPage from "../pages/ClothesPage"
 
 const mapDispatchToProps = (dispatch) => ({
   getProducts: (product) => dispatch(getAllProducts(product)),
@@ -50,7 +52,7 @@ class FetchProducts extends Component {
           }
         `,
       })
-      .then(({ data }) => this.props.getProducts(data.category))
+      .then(({ data, load }) => this.props.getProducts(data.category))
       .catch((err) => this.props.setError(err.message))
   }
 
@@ -65,6 +67,8 @@ class FetchProducts extends Component {
         <Routes>
           <Route path="/" element={<ProductListingPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/tech" element={<TechPage />} />
+          <Route path="/clothes" element={<ClothesPage />} />
         </Routes>
       </Container>
     )

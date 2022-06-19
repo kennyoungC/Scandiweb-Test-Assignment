@@ -5,6 +5,7 @@ const initialState = {
   isError: false,
   products: [],
   errorMsg: "",
+  productPrice: [],
 }
 
 const productReducer = (state = initialState, action) => {
