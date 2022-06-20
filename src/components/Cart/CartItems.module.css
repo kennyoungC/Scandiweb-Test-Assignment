@@ -3,7 +3,7 @@
   /* align-items: flex-start; */
   justify-content: space-between;
   margin-bottom: 32px;
-  height: 200px;
+  height: 100%;
 }
 .first-row {
   display: flex;

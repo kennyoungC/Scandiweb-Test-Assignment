@@ -7,6 +7,7 @@ import {
   removeCartItems,
   updateCartItems,
 } from "../../store/actions"
+import CartImgCarousel from "./CartImgCarousel"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
@@ -141,7 +142,8 @@ class CartItems extends Component {
                   -
                 </button>
               </div>
-              <img src="http://via.placeholder.com/150" alt="" />
+
+              <CartImgCarousel images={this.props.item.gallery} />
             </div>
           </div>
         </li>
