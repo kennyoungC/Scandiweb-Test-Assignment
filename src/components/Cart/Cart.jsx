@@ -5,6 +5,9 @@ import styles from "./Cart.module.css"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
+  totalCartItems: state.cart.totalQuantity,
+  totalPrice: state.cart.totalPrice,
+  currency: state.currency.currency,
 })
 class Cart extends Component {
   render() {
@@ -12,19 +15,32 @@ class Cart extends Component {
       <div>
         <ul className={styles["cart-list"]}>
           {this.props.cartItems.map((cart, key) => (
-            <CartItems index={key} item={cart} key={cart.id} />
+            <CartItems
+              ongetTotalPrice={this.getTotalPrice}
+              index={key}
+              item={cart}
+              key={cart.id}
+            />
           ))}
         </ul>
         <div>
           <div className={styles.order}>
             <p>
-              Tax 21%: <span>$42.00</span>
+              Tax 21%:{" "}
+              <span>
+                {this.props.currency.symbol}
+                {(0.21 * this.props.totalPrice).toFixed(2)}
+              </span>
             </p>
             <p>
-              Quantity: <span>3</span>
+              Quantity: <span>{this.props.totalCartItems}</span>
             </p>
             <p>
-              Total: <span>$200.00</span>
+              Total:{" "}
+              <span>
+                {this.props.currency.symbol}
+                {this.props.totalPrice.toFixed(2)}
+              </span>
             </p>
           </div>
           <button className={styles["order-btn"]}>Order</button>

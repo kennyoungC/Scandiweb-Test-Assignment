@@ -41,22 +41,6 @@ const curencies = [
 ]
 
 class MyNavbar extends Component {
-  // showPrice = () => {
-  //   const prices = this.props.currency
-  //   console.log(prices)
-  //   //  let newObj = []
-  //   //  for (const key in prices) {
-  //   //    newObj.push({
-  //   //      // name: prices[key].name,
-  //   //      price: prices[key].prices,
-  //   //    })
-  //   //  }
-  //   //  console.log(newObj)
-  // }
-  // componentDidMount() {
-  //   this.showPrice()
-  // }
-
   render() {
     return (
       <div className={styles.navbar}>
@@ -116,8 +100,8 @@ class MyNavbar extends Component {
               style={{ opacity: this.props.isOpen ? 1 : 0 }}
               className={styles.currencyList}
             >
-              {curencies.map((currency) => (
-                <li onClick={() => this.props.setCurrency(currency)}>
+              {curencies.map((currency, i) => (
+                <li key={i} onClick={() => this.props.setCurrency(currency)}>
                   {currency.symbol} {currency.label}
                 </li>
               ))}
