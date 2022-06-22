@@ -36,3 +36,51 @@
   font-size: 18px;
   font-weight: 300;
 }
+.attributes {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 6px;
+}
+.size-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.size-box button {
+  /* height: 45px;
+  width: 63px; */
+  border: 1px solid #1d1f22;
+  padding: 6px 12px;
+  margin-top: 6px;
+}
+.size-box button:hover {
+  background-color: #1d1f22;
+  color: #fff;
+}
+.color-box {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  gap: 6px;
+}
+.color-box button {
+  height: 36px;
+  width: 36px;
+  padding: 4px 9px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+.color-box button:hover {
+  border: 2px solid #5ece7b;
+}
+.color-box p {
+  margin: 8px 0;
+}
+.addToCart-btn {
+  padding: 16px 32px;
+  width: 200px;
+  height: 43px;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 12px 0;
+  background: #5ece7b;
+}

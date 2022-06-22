@@ -1,25 +1,19 @@
 import React, { Component } from "react"
-import store from "../../store"
-import styles from "./CartItems.module.css"
-import { connect } from "react-redux"
-import {
-  addToCart,
-  removeCartItems,
-  updateCartItems,
-} from "../../store/actions"
 import CartImgCarousel from "./CartImgCarousel"
+import styles from "./MiniCart.module.css"
+import { connect } from "react-redux"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
   currency: state.currency.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
-  updateCart: (item) => dispatch(updateCartItems(item)),
-  increaseCartItem: (item) => dispatch(addToCart(item)),
-  removeCartItem: (id) => dispatch(removeCartItems(id)),
+  // updateCart: (item) => dispatch(updateCartItems(item)),
+  // increaseCartItem: (item) => dispatch(addToCart(item)),
+  // removeCartItem: (id) => dispatch(removeCartItems(id)),
 })
 
-class CartItems extends Component {
+class miniCart extends Component {
   getPriceLabel = (prices) => {
     let price_ = 0
     prices.forEach((price) => {
@@ -45,33 +39,19 @@ class CartItems extends Component {
       }
     })
   }
-
-  componentDidMount() {
-    this.setTotalAMount(this.props.item.prices)
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.item.quantity !== this.props.item.quantity) {
-      this.setTotalAMount(this.props.item.prices)
-    }
-  }
-
-  // setSelectedValue = (attrib, attribute_item) => {
-  //   // console.log(attribute_item)
-  //   let items = JSON.parse(JSON.stringify(this.props.cartItems))
-
-  //   items[this.props.index].attributes[attrib].selected = attribute_item.value
-  //   console.log(items[this.props.index])
-  //   this.props.updateCart(items[this.props.index])
-  // }
-
   render() {
     return (
-      <>
+      <ul>
+        <div>
+          <p>
+            <span className={styles.bold}>MY Bag</span> 3 items
+          </p>
+        </div>
         <li>
           <div className={styles.layout}>
             <div className={styles["first-row"]}>
               <span>
-                <p className={styles.bold}>{this.props.item.brand}</p>
+                <p>{this.props.item.brand}</p>
                 <p>{this.props.item.name}</p>
               </span>
               <p className={styles.bold}>
@@ -81,7 +61,7 @@ class CartItems extends Component {
 
               {this.props.item.attributes.map((attribute, attrib) => (
                 <div key={attrib}>
-                  <p className={styles.bold}>{attribute.name}:</p>
+                  <p>{attribute.name}:</p>
                   <div className={styles.attributes}>
                     {attribute.items.map((item, i) => {
                       if (attribute.type === "swatch")
@@ -142,15 +122,17 @@ class CartItems extends Component {
                   -
                 </button>
               </div>
-
-              <CartImgCarousel images={this.props.item.gallery} />
+              <img
+                style={{ width: "120px", height: "100%", objectFit: "cover" }}
+                src={this.props.item.gallery[0]}
+                alt=""
+              />
             </div>
           </div>
         </li>
-        <hr />
-      </>
+      </ul>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartItems)
+export default connect(mapStateToProps, mapDispatchToProps)(miniCart)

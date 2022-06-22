@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import styles from "../components/Products.module.css"
 import { cartIcon } from "./UI/Icons"
 import { connect } from "react-redux"
-import { addToCart } from "../store/actions"
+import { addToCart, updateProductItem } from "../store/actions"
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
@@ -10,9 +10,14 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addItemsToCart: (item) => dispatch(addToCart(item)),
+  updateProduct: (item) => dispatch(updateProductItem(item)),
 })
 
 class Products extends Component {
+  state = {
+    isShown: false,
+  }
+
   getPriceLabel = (prices) => {
     let price_ = 0
     prices.forEach((price) => {
@@ -23,18 +28,92 @@ class Products extends Component {
     })
     return price_
   }
+  setSelectedValue = (attrib, attribute_item) => {
+    // console.log(attribute_item)
+    let items = JSON.parse(JSON.stringify(this.props.product))
 
+    items.attributes[attrib].selected = attribute_item.value
+    console.log(items)
+    this.props.updateProduct(items)
+  }
   render() {
     return (
       <div className={styles.products}>
         <div className={styles["img-box"]}>
           <img src={this.props.product.gallery[0]} alt="/" />
-          <button
-            onClick={() => this.props.addItemsToCart(this.props.product)}
-            className={styles.cartIcon}
-          >
-            {cartIcon}
-          </button>
+          {this.props.product.attributes.length !== 0 ? (
+            <button
+              onClick={() => this.setState({ isShown: !this.state.isShown })}
+              className={styles.cartIcon}
+            >
+              {cartIcon}
+            </button>
+          ) : (
+            <button
+              onClick={() => this.props.addItemsToCart(this.props.product)}
+              className={styles.cartIcon}
+            >
+              {cartIcon}
+            </button>
+          )}
+          {this.state.isShown && (
+            <div>
+              {this.props.product.attributes.map((attribute, attrib) => (
+                <div key={attrib}>
+                  <p className={styles.bold}>{attribute.name}:</p>
+                  <div className={styles.attributes}>
+                    {attribute.items.map((item, i) => {
+                      if (attribute.type === "swatch")
+                        return (
+                          <div key={i} className={styles["color-box"]}>
+                            <button
+                              style={{
+                                backgroundColor: item.value,
+                                border:
+                                  attribute.selected === item.value
+                                    ? "2px solid #5ECE7B"
+                                    : "",
+                              }}
+                              onClick={() =>
+                                this.setSelectedValue(attrib, item)
+                              }
+                            ></button>
+                          </div>
+                        )
+                      else
+                        return (
+                          <div key={i} className={styles["size-box"]}>
+                            <button
+                              style={{
+                                backgroundColor:
+                                  attribute.selected === item.value
+                                    ? "#1d1f22"
+                                    : "",
+                                color:
+                                  attribute.selected === item.value
+                                    ? "white"
+                                    : "",
+                              }}
+                              onClick={() =>
+                                this.setSelectedValue(attrib, item)
+                              }
+                            >
+                              {item.displayValue}
+                            </button>
+                          </div>
+                        )
+                    })}
+                  </div>
+                </div>
+              ))}
+              <button
+                className={styles["addToCart-btn"]}
+                onClick={() => this.props.addItemsToCart(this.props.product)}
+              >
+                ADD TO CART
+              </button>
+            </div>
+          )}
         </div>
         <p className={styles["product-name"]}>{this.props.product.name}</p>
         <span className={styles.price}>

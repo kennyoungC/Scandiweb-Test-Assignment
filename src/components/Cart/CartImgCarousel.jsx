@@ -26,19 +26,13 @@ class CartImgCarousel extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <img
-          clasName={styles.carousel}
-          src={this.props.images[this.state.position]}
-          alt="/"
-        />
-        <div className={styles.btnBox}>
-          <button onClick={this.moveLeft} clasName={styles.button}>
-            {arrowLeft}
-          </button>
-          <button onClick={this.moveRight} clasName={styles.button}>
-            {arrowRight}
-          </button>
-        </div>
+        <img src={this.props.images[this.state.position]} alt="/" />
+        {this.props.images.length > 1 && (
+          <div className={styles.btnBox}>
+            <button onClick={this.moveLeft}>{arrowLeft}</button>
+            <button onClick={this.moveRight}>{arrowRight}</button>
+          </div>
+        )}
       </div>
     )
   }

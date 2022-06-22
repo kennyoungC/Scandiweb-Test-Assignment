@@ -8,7 +8,11 @@ import {
   SET_CURRENCY,
   TOGGLE_CURRENCY_MENU,
 } from "../reducers/CurrencyReducer"
-import { GET_PRODUCTS, SET_ERROR } from "../reducers/ProductReducer"
+import {
+  GET_PRODUCTS,
+  SET_ERROR,
+  UPDATE_PRODUCT_ITEM,
+} from "../reducers/ProductReducer"
 
 export const getAllProducts = (products) => ({
   type: GET_PRODUCTS,
@@ -39,4 +43,8 @@ export const updateCartItems = (item) => ({
 export const removeCartItems = (id) => ({
   type: REMOVE_CART_ITEM,
   payload: id,
+})
+export const updateProductItem = (prod) => ({
+  type: UPDATE_PRODUCT_ITEM,
+  payload: prod,
 })

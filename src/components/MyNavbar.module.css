@@ -98,3 +98,14 @@ button {
   left: 50%;
   transform: translate(10%, -100%);
 }
+.minicart {
+  position: absolute;
+  background-color: #39393a;
+  min-width: 340px;
+  height: 460px;
+  overflow-y: scroll;
+  right: 100%;
+  top: 50%;
+  transform: translate(10%, 5%);
+  z-index: 111111;
+}

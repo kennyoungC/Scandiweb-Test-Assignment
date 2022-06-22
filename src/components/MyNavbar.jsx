@@ -4,11 +4,13 @@ import { Link, NavLink } from "react-router-dom"
 import { connect } from "react-redux"
 import { setCurrency, toggleCurrencyMenu } from "../store/actions"
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
+import MiniCart from "./Cart/MiniCart"
 
 const mapStateToProps = (state) => ({
   isOpen: state.currency.isOpen,
   currency: state.currency.currency,
   totalCartItems: state.cart.totalQuantity,
+  cartItems: state.cart.cartItems || [],
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -108,12 +110,15 @@ class MyNavbar extends Component {
             </ul>
           </div>
           <div className={styles.cart}>
-            <Link to={"/cart"}>
-              <button>{cartIcon}</button>
-              <span className={styles.cartNum}>
-                {this.props.totalCartItems}
-              </span>
-            </Link>
+            {/* <Link to={"/cart"}> */}
+            <button>{cartIcon}</button>
+            <span className={styles.cartNum}>{this.props.totalCartItems}</span>
+            {/* </Link> */}
+            <div className={styles.minicart}>
+              {this.props.cartItems.map((cart, key) => (
+                <MiniCart index={key} item={cart} key={cart.id} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
