@@ -64,6 +64,7 @@ class FetchProducts extends Component {
     return (
       <Container>
         <MyNavbar />
+
         <Routes>
           <Route path="/" element={<ProductListingPage />} />
           <Route path="/cart" element={<CartPage />} />

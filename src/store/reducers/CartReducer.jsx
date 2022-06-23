@@ -1,4 +1,5 @@
 export const ADD_TO_CART = "ADD_TO_CART"
+
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM"
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM"
 const initialState = {
@@ -12,9 +13,13 @@ const CartReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       let newProduct = payload
       const existingProductIndex = state.cartItems.findIndex(
-        (product) => product.id === newProduct.id
+        (product) =>
+          product.id === newProduct.id &&
+          JSON.stringify(product.attributes) ===
+            JSON.stringify(newProduct.attributes)
       )
       const existingProduct = state.cartItems[existingProductIndex]
+
       let addedItems
       if (existingProduct) {
         const updatedProduct = {
@@ -23,7 +28,8 @@ const CartReducer = (state = initialState, action) => {
         }
         addedItems = [...state.cartItems]
         addedItems[existingProductIndex] = updatedProduct
-      } else {
+      }
+      if (!existingProduct) {
         newProduct = {
           ...newProduct,
           quantity: 1,
@@ -41,8 +47,7 @@ const CartReducer = (state = initialState, action) => {
       const existingUpdatedProductIndex = state.cartItems.findIndex(
         (product) => product.id === updatedProduct.id
       )
-      // const existingUpdatedProduct =
-      //   state.cartItems[existingUpdatedProductIndex]
+
       let updatedItems = [...state.cartItems]
       updatedItems[existingUpdatedProductIndex] = updatedProduct
       const totalPrice = updatedItems.reduce(
@@ -55,17 +60,16 @@ const CartReducer = (state = initialState, action) => {
         cartItems: updatedItems,
         totalPrice,
       }
+
     case REMOVE_CART_ITEM:
-      const id = payload
-      const existingCartItemIndex = state.cartItems.findIndex(
-        (item) => item.id === id
-      )
-      const existingItem = state.cartItems[existingCartItemIndex]
+      const index = payload
+
+      const existingItem = state.cartItems[index]
 
       let updatedItemsAtferRemoval
       if (existingItem.quantity === 1) {
         updatedItemsAtferRemoval = state.cartItems.filter(
-          (item) => item.id !== id
+          (item, i) => i !== index
         )
       } else {
         const updatedItem = {
@@ -73,13 +77,14 @@ const CartReducer = (state = initialState, action) => {
           quantity: existingItem.quantity - 1,
         }
         updatedItemsAtferRemoval = [...state.cartItems]
-        updatedItemsAtferRemoval[existingCartItemIndex] = updatedItem
+        updatedItemsAtferRemoval[index] = updatedItem
       }
       return {
         ...state,
         totalQuantity: state.totalQuantity - 1,
         cartItems: updatedItemsAtferRemoval,
       }
+
     default:
       return state
   }

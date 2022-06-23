@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   REMOVE_CART_ITEM,
+  TOGGLE_MINI_CART,
   UPDATE_CART_ITEM,
 } from "../reducers/CartReducer"
 import {
@@ -40,6 +41,7 @@ export const updateCartItems = (item) => ({
   type: UPDATE_CART_ITEM,
   payload: item,
 })
+
 export const removeCartItems = (id) => ({
   type: REMOVE_CART_ITEM,
   payload: id,

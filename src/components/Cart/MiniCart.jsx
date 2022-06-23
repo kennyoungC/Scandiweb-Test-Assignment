@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import CartImgCarousel from "./CartImgCarousel"
 import styles from "./MiniCart.module.css"
 import { connect } from "react-redux"
+import { addToCart, removeCartItems } from "../../store/actions"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
@@ -9,8 +10,8 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   // updateCart: (item) => dispatch(updateCartItems(item)),
-  // increaseCartItem: (item) => dispatch(addToCart(item)),
-  // removeCartItem: (id) => dispatch(removeCartItems(id)),
+  increaseCartItem: (item) => dispatch(addToCart(item)),
+  removeCartItem: (id) => dispatch(removeCartItems(id)),
 })
 
 class miniCart extends Component {
@@ -42,11 +43,6 @@ class miniCart extends Component {
   render() {
     return (
       <ul>
-        <div>
-          <p>
-            <span className={styles.bold}>MY Bag</span> 3 items
-          </p>
-        </div>
         <li>
           <div className={styles.layout}>
             <div className={styles["first-row"]}>
@@ -117,13 +113,17 @@ class miniCart extends Component {
                 </button>
                 <span>{this.props.item.quantity}</span>
                 <button
-                  onClick={() => this.props.removeCartItem(this.props.item.id)}
+                  onClick={() => this.props.removeCartItem(this.props.index)}
                 >
                   -
                 </button>
               </div>
               <img
-                style={{ width: "120px", height: "100%", objectFit: "cover" }}
+                style={{
+                  width: "150px",
+                  height: "220px",
+                  objectFit: "cover",
+                }}
                 src={this.props.item.gallery[0]}
                 alt=""
               />
