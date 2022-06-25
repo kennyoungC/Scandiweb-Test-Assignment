@@ -9,7 +9,6 @@ import { Route, Routes } from "react-router-dom"
 import CartPage from "../pages/CartPage"
 import TechPage from "../pages/TechPage"
 import ClothesPage from "../pages/ClothesPage"
-
 const mapDispatchToProps = (dispatch) => ({
   getProducts: (product) => dispatch(getAllProducts(product)),
   setError: (message) => dispatch(setError(message)),

@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import store from "../../store"
 import styles from "./CartItems.module.css"
 import { connect } from "react-redux"
 import {
@@ -16,58 +15,50 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateCart: (item) => dispatch(updateCartItems(item)),
   increaseCartItem: (item) => dispatch(addToCart(item)),
-  removeCartItem: (id) => dispatch(removeCartItems(id)),
+  removeCartItem: (index) => dispatch(removeCartItems(index)),
 })
 
 class CartItems extends Component {
+  state = {
+    price: 0,
+  }
   getPriceLabel = (prices) => {
     let price_ = 0
     prices.forEach((price) => {
       if (price.currency.label === this.props.currency.label) {
-        price_ = price.currency.symbol + price.amount
+        price_ = price.amount
         return
       }
     })
     return price_
   }
 
-  setTotalAMount = (prices) => {
-    prices.forEach((price) => {
-      if (price.currency.label === this.props.currency.label) {
-        let items = JSON.parse(JSON.stringify(this.props.cartItems))
-
-        const totalPriceForEachCartItems =
-          price.amount * this.props.item.quantity
-
-        // console.log(totalPriceForEachCartItems)
-        items[this.props.index].totalPrice = totalPriceForEachCartItems
-        this.props.updateCart(items[this.props.index])
-      }
-    })
-  }
-
-  componentDidMount() {
-    this.setTotalAMount(this.props.item.prices)
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.item.quantity !== this.props.item.quantity) {
-      this.setTotalAMount(this.props.item.prices)
-    }
-  }
-
-  // setSelectedValue = (attrib, attribute_item) => {
-  //   // console.log(attribute_item)
+  // setTotalAMount = () => {
   //   let items = JSON.parse(JSON.stringify(this.props.cartItems))
 
-  //   items[this.props.index].attributes[attrib].selected = attribute_item.value
-  //   console.log(items[this.props.index])
-  //   this.props.updateCart(items[this.props.index])
+  //   const totalPriceForEachCartItems =
+  //     this.getPriceLabel(this.props.item.prices) * this.props.item.quantity
+
+  //   items[this.props.index].totalPrice = totalPriceForEachCartItems
+  //   items[this.props.index].singlePrice = this.getPriceLabel(
+  //     this.props.item.prices
+  //   )
+  //   console.log(items)
+  //   this.props.createNewCart(items)
+  // }
+  // componentDidMount() {
+  //   this.setTotalAMount()
+  // }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.currency.label !== this.props.currency.label) {
+  //     this.setTotalAMount()
+  //   }
   // }
 
   render() {
     return (
       <>
-        <li>
+        <li onClick={this.setTotalAMount}>
           <div className={styles.layout}>
             <div className={styles["first-row"]}>
               <span>
@@ -75,8 +66,11 @@ class CartItems extends Component {
                 <p>{this.props.item.name}</p>
               </span>
               <p className={styles.bold}>
-                {" "}
+                {this.props.currency.symbol}
                 {this.getPriceLabel(this.props.item.prices)}
+                <br />
+                {this.getPriceLabel(this.props.item.prices) *
+                  this.props.item.quantity}
               </p>
 
               {this.props.item.attributes.map((attribute, attrib) => (
@@ -137,7 +131,7 @@ class CartItems extends Component {
                 </button>
                 <span>{this.props.item.quantity}</span>
                 <button
-                  onClick={() => this.props.removeCartItem(this.props.item.id)}
+                  onClick={() => this.props.removeCartItem(this.props.index)}
                 >
                   -
                 </button>

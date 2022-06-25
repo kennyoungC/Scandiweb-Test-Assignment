@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import CartImgCarousel from "./CartImgCarousel"
+// import CartImgCarousel from "./CartImgCarousel"
 import styles from "./MiniCart.module.css"
 import { connect } from "react-redux"
 import { addToCart, removeCartItems } from "../../store/actions"
@@ -9,9 +9,8 @@ const mapStateToProps = (state) => ({
   currency: state.currency.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
-  // updateCart: (item) => dispatch(updateCartItems(item)),
   increaseCartItem: (item) => dispatch(addToCart(item)),
-  removeCartItem: (id) => dispatch(removeCartItems(id)),
+  removeCartItem: (index) => dispatch(removeCartItems(index)),
 })
 
 class miniCart extends Component {
@@ -19,27 +18,13 @@ class miniCart extends Component {
     let price_ = 0
     prices.forEach((price) => {
       if (price.currency.label === this.props.currency.label) {
-        price_ = price.currency.symbol + price.amount
+        price_ = price.amount
         return
       }
     })
     return price_
   }
 
-  setTotalAMount = (prices) => {
-    prices.forEach((price) => {
-      if (price.currency.label === this.props.currency.label) {
-        let items = JSON.parse(JSON.stringify(this.props.cartItems))
-
-        const totalPriceForEachCartItems =
-          price.amount * this.props.item.quantity
-
-        // console.log(totalPriceForEachCartItems)
-        items[this.props.index].totalPrice = totalPriceForEachCartItems
-        this.props.updateCart(items[this.props.index])
-      }
-    })
-  }
   render() {
     return (
       <ul>
@@ -51,7 +36,7 @@ class miniCart extends Component {
                 <p>{this.props.item.name}</p>
               </span>
               <p className={styles.bold}>
-                {" "}
+                {this.props.currency.symbol}
                 {this.getPriceLabel(this.props.item.prices)}
               </p>
 

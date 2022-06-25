@@ -36,10 +36,10 @@ ul {
   padding: 3px 6px;
   margin-top: 6px;
 }
-.size-box button:hover {
+/* .size-box button:hover {
   background-color: #1d1f22;
   color: #fff;
-}
+} */
 .color-box {
   display: flex;
   align-items: center;
@@ -52,9 +52,9 @@ ul {
   padding: 2px 6px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
-.color-box button:hover {
+/* .color-box button:hover {
   border: 2px solid #5ece7b;
-}
+} */
 .color-box p {
   margin: 8px 0;
 }

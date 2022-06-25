@@ -37,6 +37,7 @@ class App extends Component {
     return () => document.body.removeEventListener("click", isClicked)
   }
   render() {
+    // console.log(this.bodyRef)
     return (
       <div ref={this.bodyRef}>
         <ApolloProvider client={client}>

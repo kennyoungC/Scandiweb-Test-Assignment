@@ -6,7 +6,7 @@ import styles from "./Cart.module.css"
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
   totalCartItems: state.cart.totalQuantity,
-  totalPrice: state.cart.totalPrice,
+  totalPrice: state.cart.AlltotalPrice,
   currency: state.currency.currency,
 })
 class Cart extends Component {
@@ -15,7 +15,7 @@ class Cart extends Component {
       <div>
         <ul className={styles["cart-list"]}>
           {this.props.cartItems.map((cart, key) => (
-            <CartItems index={key} item={cart} key={cart.id} />
+            <CartItems index={key} item={cart} key={key} />
           ))}
         </ul>
         <div>

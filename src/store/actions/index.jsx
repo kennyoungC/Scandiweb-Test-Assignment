@@ -1,12 +1,11 @@
 import {
   ADD_TO_CART,
   REMOVE_CART_ITEM,
-  TOGGLE_MINI_CART,
   UPDATE_CART_ITEM,
 } from "../reducers/CartReducer"
 import {
-  CLOSE_CURRENCY_MENU,
   SET_CURRENCY,
+  CLOSE_CURRENCY_MENU,
   TOGGLE_CURRENCY_MENU,
 } from "../reducers/CurrencyReducer"
 import {

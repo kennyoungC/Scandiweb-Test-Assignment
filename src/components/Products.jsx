@@ -16,20 +16,35 @@ const mapDispatchToProps = (dispatch) => ({
 class Products extends Component {
   state = {
     isShown: false,
+    price: 0,
   }
 
   getPriceLabel = (prices) => {
     let price_ = 0
     prices.forEach((price) => {
       if (price.currency.label === this.props.currency.label) {
-        price_ = price.currency.symbol + price.amount
+        price_ = price.amount
         return
       }
     })
     return price_
   }
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      price: this.getPriceLabel(this.props.product.prices),
+    })
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.price !== this.getPriceLabel(this.props.product.prices)) {
+      this.setState({
+        ...this.state,
+        price: this.getPriceLabel(this.props.product.prices),
+      })
+    }
+  }
+
   setSelectedValue = (attrib, attribute_item) => {
-    // console.log(attribute_item)
     let items = JSON.parse(JSON.stringify(this.props.product))
 
     items.attributes[attrib].selected = attribute_item.value
@@ -50,7 +65,12 @@ class Products extends Component {
             </button>
           ) : (
             <button
-              onClick={() => this.props.addItemsToCart(this.props.product)}
+              onClick={() =>
+                this.props.addItemsToCart({
+                  ...this.props.product,
+                  singlePrice: this.state.price,
+                })
+              }
               className={styles.cartIcon}
             >
               {cartIcon}
@@ -108,7 +128,12 @@ class Products extends Component {
               ))}
               <button
                 className={styles["addToCart-btn"]}
-                onClick={() => this.props.addItemsToCart(this.props.product)}
+                onClick={() =>
+                  this.props.addItemsToCart({
+                    ...this.props.product,
+                    singlePrice: this.state.price,
+                  })
+                }
               >
                 ADD TO CART
               </button>
@@ -117,6 +142,7 @@ class Products extends Component {
         </div>
         <p className={styles["product-name"]}>{this.props.product.name}</p>
         <span className={styles.price}>
+          {this.props.currency.symbol}
           {this.getPriceLabel(this.props.product.prices)}
         </span>
       </div>

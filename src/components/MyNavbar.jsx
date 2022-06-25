@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   totalCartItems: state.cart.totalQuantity,
   cartItems: state.cart.cartItems || [],
+  totalPrice: state.cart.AlltotalPrice,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -56,8 +57,6 @@ class MyNavbar extends Component {
   }
   dirty = () => {
     this.setState({ isOpen: false })
-
-    Navigate("/cart")
   }
 
   render() {
@@ -154,9 +153,24 @@ class MyNavbar extends Component {
                 {this.props.cartItems.map((cart, key) => (
                   <MiniCart index={key} item={cart} key={key} />
                 ))}
+                <div className={styles.total}>
+                  <p>Total</p>
+                  <p>
+                    {" "}
+                    {this.props.currency.symbol}
+                    {this.props.totalPrice.toFixed(2)}
+                  </p>
+                </div>
                 <div className={styles.btnAction}>
                   <Link to={"/cart"}>
-                    <button onClick={this.toggleOpen}>VIEW BAG</button>
+                    <button
+                      onClick={() => {
+                        this.handleClose()
+                        console.log("fired!!!!")
+                      }}
+                    >
+                      VIEW BAG
+                    </button>
                   </Link>
                   <button>CHECKOUT</button>
                 </div>
