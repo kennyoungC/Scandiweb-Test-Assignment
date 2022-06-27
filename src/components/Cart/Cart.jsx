@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import CartItems from "./CartItems"
 import styles from "./Cart.module.css"
+import { closeCart } from "../../store/actions"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
@@ -9,7 +10,14 @@ const mapStateToProps = (state) => ({
   totalPrice: state.cart.AlltotalPrice,
   currency: state.currency.currency,
 })
+const mapDispatchToProps = (dispatch) => ({
+  closeCart: () => dispatch(closeCart()),
+})
 class Cart extends Component {
+  componentDidMount() {
+    this.props.closeCart()
+  }
+
   render() {
     return (
       <div>
@@ -45,4 +53,4 @@ class Cart extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

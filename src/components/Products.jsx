@@ -3,6 +3,7 @@ import styles from "../components/Products.module.css"
 import { cartIcon } from "./UI/Icons"
 import { connect } from "react-redux"
 import { addToCart, updateProductItem } from "../store/actions"
+import { Link } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
@@ -118,7 +119,7 @@ class Products extends Component {
                                 this.setSelectedValue(attrib, item)
                               }
                             >
-                              {item.displayValue}
+                              {item.value}
                             </button>
                           </div>
                         )
@@ -140,7 +141,10 @@ class Products extends Component {
             </div>
           )}
         </div>
-        <p className={styles["product-name"]}>{this.props.product.name}</p>
+        <Link to={"/product/" + this.props.product.id}>
+          {" "}
+          <p className={styles["product-name"]}>{this.props.product.name}</p>
+        </Link>
         <span className={styles.price}>
           {this.props.currency.symbol}
           {this.getPriceLabel(this.props.product.prices)}

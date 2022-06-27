@@ -173,3 +173,10 @@ button {
   padding: 0 24px;
   font-weight: 600;
 }
+.emptyCart {
+  font-size: 28px;
+  text-align: center;
+  font-weight: 400;
+  padding: 16px 0;
+  text-transform: uppercase;
+}

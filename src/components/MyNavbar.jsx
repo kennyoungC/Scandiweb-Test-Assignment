@@ -2,7 +2,12 @@ import React, { Component } from "react"
 import styles from "./MyNavbar.module.css"
 import { Link, NavLink } from "react-router-dom"
 import { connect } from "react-redux"
-import { setCurrency, toggleCurrencyMenu } from "../store/actions"
+import {
+  closeCart,
+  setCurrency,
+  toggleCart,
+  toggleCurrencyMenu,
+} from "../store/actions"
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
 import MiniCart from "./Cart/MiniCart"
 import { Navigate } from "react-router-dom"
@@ -13,12 +18,14 @@ const mapStateToProps = (state) => ({
   totalCartItems: state.cart.totalQuantity,
   cartItems: state.cart.cartItems || [],
   totalPrice: state.cart.AlltotalPrice,
+  openCart: state.cart.isOpen,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   toggleCurrencyMenuHandler: () => dispatch(toggleCurrencyMenu()),
-
   setCurrency: (currency) => dispatch(setCurrency(currency)),
+  toggleOpen: () => dispatch(toggleCart()),
+  closeCart: () => dispatch(closeCart()),
 })
 
 const curencies = [
@@ -45,19 +52,16 @@ const curencies = [
 ]
 
 class MyNavbar extends Component {
-  state = {
-    isOpen: false,
-  }
+  // state = {
+  //   isOpen: false,
+  // }
 
-  toggleOpen = () => {
-    this.setState({ isOpen: !this.state.isOpen })
-  }
-  handleClose = () => {
-    this.setState({ isOpen: false })
-  }
-  dirty = () => {
-    this.setState({ isOpen: false })
-  }
+  // toggleOpen = () => {
+  //   this.setState({ isOpen: !this.state.isOpen })
+  // }
+  // handleClose = () => {
+  //   this.setState({ isOpen: false })
+  // }
 
   render() {
     return (
@@ -128,52 +132,48 @@ class MyNavbar extends Component {
               ))}
             </ul>
           </div>
-          {this.state.isOpen && (
+          {this.props.openCart && (
             <span
-              style={{ overflow: this.state.isOpen ? "hidden" : "scroll" }}
-              onClick={this.handleClose}
+              style={{ overflow: this.props.openCart ? "hidden" : "scroll" }}
+              onClick={() => this.props.closeCart()}
               className={styles.overlay}
             ></span>
           )}
           <div className={styles.cart}>
-            <button onClick={this.toggleOpen}>{cartIcon}</button>
+            <button onClick={() => this.props.toggleOpen()}>{cartIcon}</button>
             <span className={styles.cartNum}>{this.props.totalCartItems}</span>
 
-            {this.state.isOpen && (
-              <div
-                onClick={() => this.setState({ isOpen: true })}
-                className={styles.minicart}
-              >
-                <div>
-                  <p className={styles.myBag}>
-                    <span className={styles.bold}>My Bag</span>{" "}
-                    {this.props.totalCartItems} items
-                  </p>
-                </div>
-                {this.props.cartItems.map((cart, key) => (
-                  <MiniCart index={key} item={cart} key={key} />
-                ))}
-                <div className={styles.total}>
-                  <p>Total</p>
-                  <p>
-                    {" "}
-                    {this.props.currency.symbol}
-                    {this.props.totalPrice.toFixed(2)}
-                  </p>
-                </div>
-                <div className={styles.btnAction}>
-                  <Link to={"/cart"}>
-                    <button
-                      onClick={() => {
-                        this.handleClose()
-                        console.log("fired!!!!")
-                      }}
-                    >
-                      VIEW BAG
-                    </button>
-                  </Link>
-                  <button>CHECKOUT</button>
-                </div>
+            {this.props.openCart && (
+              <div className={styles.minicart}>
+                {this.props.cartItems.length === 0 ? (
+                  <p className={styles.emptyCart}>cart is empty 🙂</p>
+                ) : (
+                  <>
+                    <div>
+                      <p className={styles.myBag}>
+                        <span className={styles.bold}>My Bag</span>{" "}
+                        {this.props.totalCartItems} items
+                      </p>
+                    </div>
+                    {this.props.cartItems.map((cart, key) => (
+                      <MiniCart index={key} item={cart} key={key} />
+                    ))}
+                    <div className={styles.total}>
+                      <p>Total</p>
+                      <p>
+                        {" "}
+                        {this.props.currency.symbol}
+                        {this.props.totalPrice.toFixed(2)}
+                      </p>
+                    </div>
+                    <div className={styles.btnAction}>
+                      <Link to={"/cart"}>
+                        <button>VIEW BAG</button>
+                      </Link>
+                      <button>CHECKOUT</button>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>

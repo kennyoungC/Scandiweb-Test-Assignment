@@ -2,9 +2,12 @@ export const ADD_TO_CART = "ADD_TO_CART"
 export const SET_CURRENCY = "SET_CURRENCY"
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM"
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM"
+export const TOGGLECART = "TOGGLECART"
+export const CLOSECART = "CLOSECART"
 const initialState = {
   cartItems: [],
   totalQuantity: 0,
+  isOpen: false,
 }
 const CartReducer = (state = initialState, action) => {
   const { type, payload } = action
@@ -88,7 +91,16 @@ const CartReducer = (state = initialState, action) => {
         totalQuantity: state.totalQuantity - 1,
         cartItems: updatedItemsAtferRemoval,
       }
-
+    case TOGGLECART:
+      return {
+        ...state,
+        isOpen: !state.isOpen,
+      }
+    case CLOSECART:
+      return {
+        ...state,
+        isOpen: false,
+      }
     default:
       return state
   }
