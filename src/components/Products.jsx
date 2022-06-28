@@ -163,10 +163,12 @@ class Products extends Component {
             </div>
           )}
         </div>
-        <Link to={"/product/" + this.props.product.id}>
-          {" "}
-          <p className={styles["product-name"]}>{this.props.product.name}</p>
-        </Link>
+        <p className={styles["product-name"]}>
+          <Link to={"/product/" + this.props.product.id}>
+            {" "}
+            {this.props.product.brand} {this.props.product.name}
+          </Link>
+        </p>
         <span className={styles.price}>
           {this.props.currency.symbol}
           {this.getPriceLabel(this.props.product.prices)}

@@ -53,6 +53,13 @@
   font-size: 18px;
   font-weight: 300;
 }
+.product-name a {
+  text-decoration: none;
+  color: #000;
+}
+.product-name:hover {
+  text-decoration: underline;
+}
 .attributes {
   display: flex;
   /* flex-direction: column; */
