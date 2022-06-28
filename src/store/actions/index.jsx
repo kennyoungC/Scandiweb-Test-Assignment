@@ -1,9 +1,9 @@
 import {
   ADD_TO_CART,
+  CLEARCART,
   CLOSECART,
   REMOVE_CART_ITEM,
   TOGGLECART,
-  UPDATE_CART_ITEM,
 } from "../reducers/CartReducer"
 import {
   SET_CURRENCY,
@@ -38,10 +38,6 @@ export const setCurrency = (cur) => ({
   type: SET_CURRENCY,
   payload: cur,
 })
-export const updateCartItems = (item) => ({
-  type: UPDATE_CART_ITEM,
-  payload: item,
-})
 
 export const removeCartItems = (id) => ({
   type: REMOVE_CART_ITEM,
@@ -56,4 +52,7 @@ export const toggleCart = () => ({
 })
 export const closeCart = () => ({
   type: CLOSECART,
+})
+export const clearCart = () => ({
+  type: CLEARCART,
 })

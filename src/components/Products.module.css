@@ -2,6 +2,23 @@
   padding: 12px;
   max-width: fit-content;
   max-width: -moz-fit-content;
+  position: relative;
+}
+.out-of-stock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #8d8f9a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 12px;
+  z-index: 999;
+  text-transform: uppercase;
 }
 .products:hover {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
@@ -83,4 +100,7 @@
   text-transform: uppercase;
   margin: 12px 0;
   background: #5ece7b;
+}
+button:disabled {
+  background: #c4dfcb;
 }

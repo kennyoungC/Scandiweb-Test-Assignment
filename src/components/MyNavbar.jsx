@@ -52,17 +52,6 @@ const curencies = [
 ]
 
 class MyNavbar extends Component {
-  // state = {
-  //   isOpen: false,
-  // }
-
-  // toggleOpen = () => {
-  //   this.setState({ isOpen: !this.state.isOpen })
-  // }
-  // handleClose = () => {
-  //   this.setState({ isOpen: false })
-  // }
-
   render() {
     return (
       <div className={styles.navbar}>
@@ -141,7 +130,11 @@ class MyNavbar extends Component {
           )}
           <div className={styles.cart}>
             <button onClick={() => this.props.toggleOpen()}>{cartIcon}</button>
-            <span className={styles.cartNum}>{this.props.totalCartItems}</span>
+            {this.props.cartItems.length > 0 && (
+              <span className={styles.cartNum}>
+                {this.props.totalCartItems}
+              </span>
+            )}
 
             {this.props.openCart && (
               <div className={styles.minicart}>

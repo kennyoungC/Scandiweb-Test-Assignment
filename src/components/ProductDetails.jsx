@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import styles from "./ProductDetails.module.css"
 import { connect } from "react-redux"
 import { addToCart, updateProductItem } from "../store/actions"
+import { Markup } from "interweave"
+import { Navigate } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   currency: state.currency.currency,
@@ -14,14 +16,15 @@ const mapDispatchToProps = (dispatch) => ({
 class ProductDetails extends Component {
   state = {
     selectedImage: this.props.product.gallery[0],
-    price: 0,
+    price: "",
     prod: this.props.product,
+    redirect: false,
   }
   setSelectedValue = (attrib, attribute_item) => {
-    let items = JSON.parse(JSON.stringify(this.props.product))
-
+    const items = this.state.prod
     items.attributes[attrib].selected = attribute_item.value
     console.log(items)
+
     this.setState({ ...this.state, prod: items })
   }
   getPriceLabel = (prices) => {
@@ -48,7 +51,14 @@ class ProductDetails extends Component {
       })
     }
   }
-
+  addToCartHadler = (e) => {
+    e.preventDefault()
+    this.props.addItemsToCart({
+      ...this.state.prod,
+      singlePrice: this.state.price,
+    })
+    this.setState({ ...this.state, redirect: true })
+  }
   render() {
     return (
       <div className={styles.layout}>
@@ -123,20 +133,15 @@ class ProductDetails extends Component {
                 {this.getPriceLabel(this.props.product.prices)}
               </span>
             </div>
-            <button
-              className={styles["addToCart-btn"]}
-              onClick={() =>
-                this.props.addItemsToCart({
-                  ...this.state.prod,
-                  singlePrice: this.state.price,
-                })
-              }
-            >
-              ADD TO CART
-            </button>
+            <form onSubmit={this.addToCartHadler}>
+              <button className={styles["addToCart-btn"]}>ADD TO CART</button>
+            </form>
           </div>
-          {this.props.product.description}
+          <div className={styles.description}>
+            <Markup content={this.props.product.description} />;
+          </div>
         </div>
+        {this.state.redirect && <Navigate to="/" replace={true} />}
       </div>
     )
   }

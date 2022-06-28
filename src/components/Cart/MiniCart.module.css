@@ -2,7 +2,6 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  /* gap: 12px; */
   margin-bottom: 24px;
   height: 100%;
 }
@@ -21,7 +20,6 @@ ul {
 }
 .attributes {
   display: flex;
-  /* flex-direction: column; */
   gap: 6px;
 }
 .size-box {
@@ -29,24 +27,19 @@ ul {
   align-items: center;
   gap: 6px;
 }
-.size-box button {
-  /* height: 45px;
-  width: 63px; */
+.size-box span {
   border: 1px solid #1d1f22;
   padding: 3px 6px;
   margin-top: 6px;
 }
-/* .size-box button:hover {
-  background-color: #1d1f22;
-  color: #fff;
-} */
+
 .color-box {
   display: flex;
   align-items: center;
   margin-top: 6px;
   gap: 6px;
 }
-.color-box button {
+.color-box span {
   height: 20px;
   width: 20px;
   padding: 2px 6px;

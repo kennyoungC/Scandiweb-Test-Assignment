@@ -48,7 +48,7 @@ class miniCart extends Component {
                       if (attribute.type === "swatch")
                         return (
                           <div key={i} className={styles["color-box"]}>
-                            <button
+                            <span
                               style={{
                                 backgroundColor: item.value,
                                 border:
@@ -56,16 +56,13 @@ class miniCart extends Component {
                                     ? "2px solid #5ECE7B"
                                     : "",
                               }}
-                              // onClick={() =>
-                              //   this.setSelectedValue(attrib, item)
-                              // }
-                            ></button>
+                            ></span>
                           </div>
                         )
                       else
                         return (
                           <div key={i} className={styles["size-box"]}>
-                            <button
+                            <span
                               style={{
                                 backgroundColor:
                                   attribute.selected === item.value
@@ -76,12 +73,9 @@ class miniCart extends Component {
                                     ? "white"
                                     : "",
                               }}
-                              // onClick={() =>
-                              //   this.setSelectedValue(attrib, item)
-                              // }
                             >
-                              {item.displayValue}
-                            </button>
+                              {item.value}
+                            </span>
                           </div>
                         )
                     })}

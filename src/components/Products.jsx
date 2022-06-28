@@ -18,6 +18,7 @@ class Products extends Component {
   state = {
     isShown: false,
     price: 0,
+    disabled: true,
   }
 
   getPriceLabel = (prices) => {
@@ -51,10 +52,34 @@ class Products extends Component {
     items.attributes[attrib].selected = attribute_item.value
     console.log(items)
     this.props.updateProduct(items)
+    this.setState({
+      ...this.state,
+      disabled: false,
+    })
   }
+
+  addToCartHandler = (e) => {
+    e.preventDefault()
+    this.props.addItemsToCart({
+      ...this.props.product,
+      singlePrice: this.state.price,
+    })
+
+    this.setState({
+      ...this.state,
+      isShown: false,
+    })
+  }
+
   render() {
     return (
-      <div className={styles.products}>
+      <div
+        style={{ opacity: this.props.product.inStock ? 1 : 0.4 }}
+        className={styles.products}
+      >
+        {!this.props.product.inStock && (
+          <p className={styles["out-of-stock"]}>out of stock</p>
+        )}
         <div className={styles["img-box"]}>
           <img src={this.props.product.gallery[0]} alt="/" />
           {this.props.product.attributes.length !== 0 ? (
@@ -127,17 +152,14 @@ class Products extends Component {
                   </div>
                 </div>
               ))}
-              <button
-                className={styles["addToCart-btn"]}
-                onClick={() =>
-                  this.props.addItemsToCart({
-                    ...this.props.product,
-                    singlePrice: this.state.price,
-                  })
-                }
-              >
-                ADD TO CART
-              </button>
+              <form onSubmit={this.addToCartHandler}>
+                <button
+                  disabled={this.state.disabled}
+                  className={styles["addToCart-btn"]}
+                >
+                  ADD TO CART
+                </button>
+              </form>
             </div>
           )}
         </div>

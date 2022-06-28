@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import CartItems from "./CartItems"
 import styles from "./Cart.module.css"
-import { closeCart } from "../../store/actions"
+import { clearCart, closeCart } from "../../store/actions"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   closeCart: () => dispatch(closeCart()),
+  clearCart: () => dispatch(clearCart()),
 })
 class Cart extends Component {
   componentDidMount() {
@@ -30,23 +31,36 @@ class Cart extends Component {
           <div className={styles.order}>
             <p>
               Tax 21%:{" "}
-              <span>
-                {this.props.currency.symbol}
-                {(0.21 * this.props.totalPrice).toFixed(2)}
-              </span>
+              {this.props.cartItems.length === 0 ? (
+                0
+              ) : (
+                <span>
+                  {this.props.currency.symbol}
+                  {(0.21 * this.props.totalPrice).toFixed(2)}
+                </span>
+              )}
             </p>
             <p>
               Quantity: <span>{this.props.totalCartItems}</span>
             </p>
             <p>
               Total:{" "}
-              <span>
-                {this.props.currency.symbol}
-                {this.props.totalPrice.toFixed(2)}
-              </span>
+              {this.props.cartItems.length === 0 ? (
+                0
+              ) : (
+                <span>
+                  {this.props.currency.symbol}
+                  {this.props.totalPrice.toFixed(2)}
+                </span>
+              )}
             </p>
           </div>
-          <button className={styles["order-btn"]}>Order</button>
+          <button
+            onClick={() => this.props.clearCart()}
+            className={styles["order-btn"]}
+          >
+            Order
+          </button>
         </div>
       </div>
     )

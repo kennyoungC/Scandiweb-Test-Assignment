@@ -18,6 +18,7 @@
 .side-imgs img {
   width: 90px;
   height: 90px;
+  cursor: pointer;
 }
 .main-img img {
   width: 450px;
@@ -48,7 +49,7 @@
 .color-box {
   display: flex;
   align-items: center;
-  margin-top: 6px;
+  margin: 12px 0;
   gap: 6px;
 }
 .color-box button {
@@ -60,8 +61,9 @@
 .color-box button:hover {
   border: 2px solid #5ece7b;
 }
-.color-box p {
-  margin: 8px 0;
+
+.bold {
+  font-weight: bold;
 }
 .addToCart-btn {
   padding: 16px 32px;
@@ -84,4 +86,16 @@
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 12px;
+}
+.description {
+  margin: 24px 0;
+  max-height: 350px;
+  /* overflow-y: scroll; */
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.description ul {
+  padding-inline-start: 0;
 }

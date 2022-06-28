@@ -4,6 +4,7 @@ export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM"
 export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM"
 export const TOGGLECART = "TOGGLECART"
 export const CLOSECART = "CLOSECART"
+export const CLEARCART = "CLEARCART"
 const initialState = {
   cartItems: [],
   totalQuantity: 0,
@@ -53,21 +54,6 @@ const CartReducer = (state = initialState, action) => {
         AlltotalPrice,
       }
 
-    case UPDATE_CART_ITEM:
-      let updatedProduct = payload
-      console.log("updatedProduct", updatedProduct)
-      const existingUpdatedProductIndex = state.cartItems.findIndex(
-        (product) => product.id === updatedProduct.id
-      )
-
-      let updatedItems = [...state.cartItems]
-      updatedItems[existingUpdatedProductIndex] = updatedProduct
-
-      return {
-        ...state,
-        cartItems: updatedItems,
-      }
-
     case REMOVE_CART_ITEM:
       const index = payload
 
@@ -100,6 +86,13 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
         isOpen: false,
+      }
+    case CLEARCART:
+      return {
+        ...state,
+        cartItems: [],
+        totalQuantity: 0,
+        AlltotalPrice: 0,
       }
     default:
       return state

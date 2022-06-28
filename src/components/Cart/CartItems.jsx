@@ -1,11 +1,7 @@
 import React, { Component } from "react"
 import styles from "./CartItems.module.css"
 import { connect } from "react-redux"
-import {
-  addToCart,
-  removeCartItems,
-  updateCartItems,
-} from "../../store/actions"
+import { addToCart, removeCartItems } from "../../store/actions"
 import CartImgCarousel from "./CartImgCarousel"
 
 const mapStateToProps = (state) => ({
@@ -13,7 +9,6 @@ const mapStateToProps = (state) => ({
   currency: state.currency.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
-  updateCart: (item) => dispatch(updateCartItems(item)),
   increaseCartItem: (item) => dispatch(addToCart(item)),
   removeCartItem: (index) => dispatch(removeCartItems(index)),
 })
@@ -32,28 +27,6 @@ class CartItems extends Component {
     })
     return price_
   }
-
-  // setTotalAMount = () => {
-  //   let items = JSON.parse(JSON.stringify(this.props.cartItems))
-
-  //   const totalPriceForEachCartItems =
-  //     this.getPriceLabel(this.props.item.prices) * this.props.item.quantity
-
-  //   items[this.props.index].totalPrice = totalPriceForEachCartItems
-  //   items[this.props.index].singlePrice = this.getPriceLabel(
-  //     this.props.item.prices
-  //   )
-  //   console.log(items)
-  //   this.props.createNewCart(items)
-  // }
-  // componentDidMount() {
-  //   this.setTotalAMount()
-  // }
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.currency.label !== this.props.currency.label) {
-  //     this.setTotalAMount()
-  //   }
-  // }
 
   render() {
     return (
@@ -81,7 +54,7 @@ class CartItems extends Component {
                       if (attribute.type === "swatch")
                         return (
                           <div key={i} className={styles["color-box"]}>
-                            <button
+                            <span
                               style={{
                                 backgroundColor: item.value,
                                 border:
@@ -89,16 +62,13 @@ class CartItems extends Component {
                                     ? "2px solid #5ECE7B"
                                     : "",
                               }}
-                              // onClick={() =>
-                              //   this.setSelectedValue(attrib, item)
-                              // }
-                            ></button>
+                            ></span>
                           </div>
                         )
                       else
                         return (
                           <div key={i} className={styles["size-box"]}>
-                            <button
+                            <span
                               style={{
                                 backgroundColor:
                                   attribute.selected === item.value
@@ -109,12 +79,9 @@ class CartItems extends Component {
                                     ? "white"
                                     : "",
                               }}
-                              // onClick={() =>
-                              //   this.setSelectedValue(attrib, item)
-                              // }
                             >
-                              {item.displayValue}
-                            </button>
+                              {item.value}
+                            </span>
                           </div>
                         )
                     })}
