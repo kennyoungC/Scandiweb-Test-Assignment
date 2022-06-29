@@ -1,22 +1,23 @@
 import React, { Component } from "react"
 import styles from "./ProductDetails.module.css"
 import { connect } from "react-redux"
-import { addToCart, updateProductItem } from "../store/actions"
+import { addToCart, setTotalAmt, updateProductItem } from "../store/actions"
 import { Markup } from "interweave"
 import { Navigate } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
-  currency: state.currency.currency,
+  currency: state.cart.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
   addItemsToCart: (item) => dispatch(addToCart(item)),
   updateProduct: (item) => dispatch(updateProductItem(item)),
+  setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
 class ProductDetails extends Component {
   state = {
     selectedImage: this.props.product.gallery[0],
-    price: "",
+
     prod: this.props.product,
     redirect: false,
   }
@@ -37,27 +38,12 @@ class ProductDetails extends Component {
     })
     return price_
   }
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      price: this.getPriceLabel(this.props.product.prices),
-    })
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.price !== this.getPriceLabel(this.props.product.prices)) {
-      this.setState({
-        ...this.state,
-        price: this.getPriceLabel(this.props.product.prices),
-      })
-    }
-  }
+
   addToCartHadler = (e) => {
     e.preventDefault()
-    this.props.addItemsToCart({
-      ...this.state.prod,
-      singlePrice: this.state.price,
-    })
+    this.props.addItemsToCart(this.state.prod)
     this.setState({ ...this.state, redirect: true })
+    this.props.setTotalAmount()
   }
   render() {
     return (

@@ -3,10 +3,11 @@ import {
   CLEARCART,
   CLOSECART,
   REMOVE_CART_ITEM,
+  SET_TOTAL_AMT,
   TOGGLECART,
+  SET_CURRENCY,
 } from "../reducers/CartReducer"
 import {
-  SET_CURRENCY,
   CLOSE_CURRENCY_MENU,
   TOGGLE_CURRENCY_MENU,
 } from "../reducers/CurrencyReducer"
@@ -55,4 +56,7 @@ export const closeCart = () => ({
 })
 export const clearCart = () => ({
   type: CLEARCART,
+})
+export const setTotalAmt = () => ({
+  type: SET_TOTAL_AMT,
 })

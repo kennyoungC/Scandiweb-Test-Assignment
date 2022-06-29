@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import {
   closeCart,
   setCurrency,
+  setTotalAmt,
   toggleCart,
   toggleCurrencyMenu,
 } from "../store/actions"
@@ -14,7 +15,7 @@ import { Navigate } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   isOpen: state.currency.isOpen,
-  currency: state.currency.currency,
+  currency: state.cart.currency,
   totalCartItems: state.cart.totalQuantity,
   cartItems: state.cart.cartItems || [],
   totalPrice: state.cart.AlltotalPrice,
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrency: (currency) => dispatch(setCurrency(currency)),
   toggleOpen: () => dispatch(toggleCart()),
   closeCart: () => dispatch(closeCart()),
+  setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
 const curencies = [
@@ -52,6 +54,13 @@ const curencies = [
 ]
 
 class MyNavbar extends Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.currency !== this.props.currency) {
+      console.log("currency changed")
+      this.props.setTotalAmount()
+    }
+  }
+
   render() {
     return (
       <div className={styles.navbar}>

@@ -18,7 +18,7 @@ const productReducer = (state = initialState, action) => {
         products: payload.products.map((product) => {
           return {
             ...product,
-            quantity: 1,
+           quantity: 1, 
           }
         }),
       }

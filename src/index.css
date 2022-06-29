@@ -17,3 +17,8 @@ code {
   text-transform: uppercase;
   font-weight: 500;
 }
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}

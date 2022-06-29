@@ -1,13 +1,13 @@
 export const TOGGLE_CURRENCY_MENU = "TOGGLE_CURRENCY_MENU"
 export const CLOSE_CURRENCY_MENU = "CLOSE_CURRENCY_MENU"
 
-export const SET_CURRENCY = "SET_CURRENCY"
+// export const SET_CURRENCY = "SET_CURRENCY"
 const initialState = {
   isOpen: false,
-  currency: {
-    label: "USD",
-    symbol: "$",
-  },
+  // currency: {
+  //   label: "USD",
+  //   symbol: "$",
+  // },
 }
 
 const currencyReducer = (state = initialState, action) => {
@@ -23,11 +23,11 @@ const currencyReducer = (state = initialState, action) => {
         ...state,
         isOpen: false,
       }
-    case SET_CURRENCY:
-      return {
-        ...state,
-        currency: payload,
-      }
+    // case SET_CURRENCY:
+    //   return {
+    //     ...state,
+    //     currency: payload,
+    //   }
     default:
       return state
   }

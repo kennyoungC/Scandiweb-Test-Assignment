@@ -5,11 +5,28 @@ export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM"
 export const TOGGLECART = "TOGGLECART"
 export const CLOSECART = "CLOSECART"
 export const CLEARCART = "CLEARCART"
+export const SET_TOTAL_AMT = "SET_TOTAL_AMT"
 const initialState = {
   cartItems: [],
   totalQuantity: 0,
   isOpen: false,
+  currency: {
+    label: "USD",
+    symbol: "$",
+  },
 }
+
+// const getPriceLabel = (prices) => {
+//   let price_ = 0
+//   prices.forEach((price) => {
+//     if (price.currency.label === state.currency.label) {
+//       price_ = price.amount
+//       return
+//     }
+//   })
+//   return price_
+// }
+
 const CartReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
@@ -43,15 +60,15 @@ const CartReducer = (state = initialState, action) => {
 
         addedItems = [...state.cartItems, newestProduct]
       }
-      const AlltotalPrice = addedItems.reduce(
-        (acc, item) => acc + item.totalPrice,
-        0
-      )
+      // const AlltotalPrice = addedItems.reduce(
+      //   (acc, item) => acc + item.totalPrice,
+      //   0
+      // )
       return {
         ...state,
         cartItems: addedItems,
         totalQuantity: state.totalQuantity + 1,
-        AlltotalPrice,
+        // AlltotalPrice,
       }
 
     case REMOVE_CART_ITEM:
@@ -94,8 +111,43 @@ const CartReducer = (state = initialState, action) => {
         totalQuantity: 0,
         AlltotalPrice: 0,
       }
+    case SET_TOTAL_AMT:
+      const getPriceLabel = (prices, currency) => {
+        let price_ = 0
+        prices.forEach((price) => {
+          if (price.currency.label === currency) {
+            price_ = price.amount
+            return
+          }
+        })
+        return price_
+      }
+      const newCartItems = state.cartItems.map((product) => {
+        return {
+          ...product,
+          singlePrice: getPriceLabel(product.prices, state.currency.label),
+          totalPrice:
+            getPriceLabel(product.prices, state.currency.label) *
+            product.quantity,
+        }
+      })
+      console.log("newCartItems", newCartItems)
+      const AlltotalPrice = newCartItems.reduce(
+        (acc, item) => acc + item.totalPrice,
+        0
+      )
+      return {
+        ...state,
+        AlltotalPrice,
+      }
+    case SET_CURRENCY:
+      return {
+        ...state,
+        currency: payload,
+      }
     default:
       return state
   }
 }
+
 export default CartReducer

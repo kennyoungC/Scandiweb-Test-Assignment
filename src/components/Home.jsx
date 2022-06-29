@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import ProductListingPage from "./ProductListingPage"
 import MyNavbar from "./MyNavbar"
-import styled from "styled-components"
 import { Route, Routes } from "react-router-dom"
 import CartPage from "../pages/CartPage"
 import TechPage from "../pages/TechPage"
@@ -11,7 +10,7 @@ import ProductPage from "../pages/ProductPage"
 class Home extends Component {
   render() {
     return (
-      <Container>
+      <div className="container">
         <MyNavbar />
 
         <Routes>
@@ -21,16 +20,9 @@ class Home extends Component {
           <Route path="/clothes" element={<ClothesPage />} />
           <Route path="/product/:productId" element={<ProductPage />} />
         </Routes>
-      </Container>
+      </div>
     )
   }
 }
 
 export default Home
-
-const Container = styled.div`
-  background-color: white;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 48px;
-`

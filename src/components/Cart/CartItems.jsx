@@ -1,16 +1,17 @@
 import React, { Component } from "react"
 import styles from "./CartItems.module.css"
 import { connect } from "react-redux"
-import { addToCart, removeCartItems } from "../../store/actions"
+import { addToCart, removeCartItems, setTotalAmt } from "../../store/actions"
 import CartImgCarousel from "./CartImgCarousel"
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart.cartItems || [],
-  currency: state.currency.currency,
+  currency: state.cart.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
   increaseCartItem: (item) => dispatch(addToCart(item)),
   removeCartItem: (index) => dispatch(removeCartItems(index)),
+  setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
 class CartItems extends Component {
@@ -27,7 +28,10 @@ class CartItems extends Component {
     })
     return price_
   }
-
+  addToCartHadler = () => {
+    this.props.increaseCartItem(this.props.item)
+    this.props.setTotalAmount()
+  }
   render() {
     return (
       <>
@@ -91,11 +95,8 @@ class CartItems extends Component {
             </div>
             <div className={styles["second-row"]}>
               <div className={styles["action-btn"]}>
-                <button
-                  onClick={() => this.props.increaseCartItem(this.props.item)}
-                >
-                  +
-                </button>
+                <button onClick={this.addToCartHadler}>+</button>
+
                 <span>{this.props.item.quantity}</span>
                 <button
                   onClick={() => this.props.removeCartItem(this.props.index)}
