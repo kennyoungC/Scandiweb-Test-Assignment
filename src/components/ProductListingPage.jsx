@@ -97,6 +97,6 @@ const Row = styled.div`
   align-items: center;
   grid-template-columns: auto auto auto;
   row-gap: 48px;
-  column-gap: 32px;
-  padding: 10px;
+  //column-gap: 32px;
+  justify-content: space-between;
 `

@@ -36,15 +36,12 @@
   gap: 6px;
 }
 .color-box span {
-  cursor: none;
   height: 36px;
   width: 36px;
   padding: 4px 9px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
-/* .color-box button:hover {
-  border: 2px solid #5ece7b;
-} */
+
 .color-box p {
   margin: 8px 0;
 }

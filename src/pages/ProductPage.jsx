@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { request, gql } from "graphql-request"
 import ProductDetails from "../components/ProductDetails"
+
 const query = (productId) => gql`
     {
       product(id: "${productId}") {

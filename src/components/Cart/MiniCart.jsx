@@ -26,9 +26,12 @@ class miniCart extends Component {
     return price_
   }
 
-  addToCartHadler = (e) => {
-    // e.preventDefault()
+  addToCartHadler = () => {
     this.props.increaseCartItem(this.props.item)
+    this.props.setTotalAmount()
+  }
+  removeCartItemHadler = () => {
+    this.props.removeCartItem(this.props.index)
     this.props.setTotalAmount()
   }
 
@@ -44,7 +47,7 @@ class miniCart extends Component {
               </span>
               <p className={styles.bold}>
                 {this.props.currency.symbol}
-                {this.getPriceLabel(this.props.item.prices)}
+                {this.getPriceLabel(this.props.item.prices).toFixed(2)}
               </p>
 
               {this.props.item.attributes.map((attribute, attrib) => (
@@ -94,11 +97,7 @@ class miniCart extends Component {
               <div className={styles["action-btn"]}>
                 <button onClick={this.addToCartHadler}>+</button>
                 <span>{this.props.item.quantity}</span>
-                <button
-                  onClick={() => this.props.removeCartItem(this.props.index)}
-                >
-                  -
-                </button>
+                <button onClick={this.removeCartItemHadler}>-</button>
               </div>
               <img
                 style={{

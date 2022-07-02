@@ -32,6 +32,10 @@ class CartItems extends Component {
     this.props.increaseCartItem(this.props.item)
     this.props.setTotalAmount()
   }
+  removeCartItemHadler = () => {
+    this.props.removeCartItem(this.props.index)
+    this.props.setTotalAmount()
+  }
   render() {
     return (
       <>
@@ -44,10 +48,12 @@ class CartItems extends Component {
               </span>
               <p className={styles.bold}>
                 {this.props.currency.symbol}
-                {this.getPriceLabel(this.props.item.prices)}
+                {this.getPriceLabel(this.props.item.prices).toFixed(2)}
                 <br />
-                {this.getPriceLabel(this.props.item.prices) *
-                  this.props.item.quantity}
+                {(
+                  this.getPriceLabel(this.props.item.prices) *
+                  this.props.item.quantity
+                ).toFixed(2)}
               </p>
 
               {this.props.item.attributes.map((attribute, attrib) => (
@@ -98,11 +104,7 @@ class CartItems extends Component {
                 <button onClick={this.addToCartHadler}>+</button>
 
                 <span>{this.props.item.quantity}</span>
-                <button
-                  onClick={() => this.props.removeCartItem(this.props.index)}
-                >
-                  -
-                </button>
+                <button onClick={this.removeCartItemHadler}>-</button>
               </div>
 
               <CartImgCarousel images={this.props.item.gallery} />

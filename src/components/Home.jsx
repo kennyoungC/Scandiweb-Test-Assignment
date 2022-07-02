@@ -6,13 +6,15 @@ import CartPage from "../pages/CartPage"
 import TechPage from "../pages/TechPage"
 import ClothesPage from "../pages/ClothesPage"
 import ProductPage from "../pages/ProductPage"
+import styled from "styled-components"
 
 class Home extends Component {
   render() {
     return (
       <div className="container">
-        <MyNavbar />
-
+        <Sticky>
+          <MyNavbar />
+        </Sticky>
         <Routes>
           <Route path="/" element={<ProductListingPage />} />
           <Route path="/cart" element={<CartPage />} />
@@ -26,3 +28,11 @@ class Home extends Component {
 }
 
 export default Home
+const Sticky = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+  width: 100%;
+  margin: 16px 0;
+`
