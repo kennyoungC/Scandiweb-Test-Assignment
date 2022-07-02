@@ -65,8 +65,8 @@ class ProductDetails extends Component {
         </div>
 
         <div className={styles["product-info"]}>
-          <h2>{this.props.product.brand}</h2>
-          <h3>{this.props.product.name}</h3>
+          <h1>{this.props.product.brand}</h1>
+          <h2>{this.props.product.name}</h2>
           <div>
             {this.state.prod.attributes.map((attribute, attrib) => (
               <div key={attrib}>
