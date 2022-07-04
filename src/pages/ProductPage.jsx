@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { request, gql } from "graphql-request"
 import ProductDetails from "../components/ProductDetails"
+import { withRouter } from "react-router-dom"
 
 const query = (productId) => gql`
     {
@@ -38,8 +39,7 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    const studentId = window.location.href.split("/")[4]
-    console.log(studentId)
+    const studentId = this.props.match.params.productId
 
     request("http://localhost:4000/", query(studentId))
       .then(({ product }) =>
@@ -55,10 +55,9 @@ class ProductPage extends Component {
         ) : (
           <ProductDetails product={this.state.product} />
         )}
-        {/* <ProductDetails product={this.state.product} />{" "} */}
       </div>
     )
   }
 }
 
-export default ProductPage
+export default withRouter(ProductPage)

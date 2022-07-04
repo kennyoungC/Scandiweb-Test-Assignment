@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import ProductListingPage from "./ProductListingPage"
 import MyNavbar from "./MyNavbar"
-import { Route, Routes } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 import CartPage from "../pages/CartPage"
 import TechPage from "../pages/TechPage"
 import ClothesPage from "../pages/ClothesPage"
@@ -15,13 +15,26 @@ class Home extends Component {
         <Sticky>
           <MyNavbar />
         </Sticky>
-        <Routes>
-          <Route path="/" element={<ProductListingPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/tech" element={<TechPage />} />
-          <Route path="/clothes" element={<ClothesPage />} />
-          <Route path="/product/:productId" element={<ProductPage />} />
-        </Routes>
+        <Switch>
+          <Route exact path="/">
+            <ProductListingPage />
+          </Route>
+          <Route exact path="/cart">
+            <CartPage />
+          </Route>
+          <Route exact path="/tech">
+            <TechPage />
+          </Route>
+          <Route exact path="/clothes">
+            <ClothesPage />
+          </Route>
+          <Route path="/product/:productId">
+            <ProductPage />
+          </Route>
+          <Route path="*">
+            <h1>404(Page Not Found)</h1>
+          </Route>
+        </Switch>
       </div>
     )
   }

@@ -3,7 +3,7 @@ import styles from "./ProductDetails.module.css"
 import { connect } from "react-redux"
 import { addToCart, setTotalAmt, updateProductItem } from "../store/actions"
 import { Markup } from "interweave"
-import { Navigate } from "react-router-dom"
+import { Navigate, Redirect } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   currency: state.cart.currency,
@@ -43,6 +43,7 @@ class ProductDetails extends Component {
     e.preventDefault()
     this.props.addItemsToCart(this.state.prod)
     this.setState({ ...this.state, redirect: true })
+
     this.props.setTotalAmount()
   }
   render() {
@@ -127,7 +128,7 @@ class ProductDetails extends Component {
             <Markup content={this.props.product.description} />;
           </div>
         </div>
-        {this.state.redirect && <Navigate to="/" replace={true} />}
+        {this.state.redirect && <Redirect to="/" />}
       </div>
     )
   }

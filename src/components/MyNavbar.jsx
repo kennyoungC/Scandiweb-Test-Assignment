@@ -11,7 +11,6 @@ import {
 } from "../store/actions"
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
 import MiniCart from "./Cart/MiniCart"
-import { Navigate } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   isOpen: state.currency.isOpen,
@@ -66,27 +65,17 @@ class MyNavbar extends Component {
       <div className={styles.navbar}>
         <ul className={styles.navLinks}>
           <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to={"/"}
-            >
-              {" "}
+            <NavLink exact activeClassName={styles.active} to={"/"}>
               all
             </NavLink>
           </li>
           <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to={"/tech"}
-            >
+            <NavLink activeClassName={styles.active} to={"/tech"}>
               tech
             </NavLink>
           </li>
           <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to={"/clothes"}
-            >
+            <NavLink activeClassName={styles.active} to={"/clothes"}>
               clothes
             </NavLink>
           </li>
