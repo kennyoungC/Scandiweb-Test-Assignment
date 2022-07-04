@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import styles from "../components/Products.module.css"
 import { cartIcon } from "./UI/Icons"
 import { connect } from "react-redux"
-import { addToCart, setTotalAmt, updateProductItem } from "../store/actions"
+import { addToCart, setTotalAmt } from "../store/actions"
 import { Link } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
@@ -12,15 +12,21 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addItemsToCart: (item) => dispatch(addToCart(item)),
-  updateProduct: (item) => dispatch(updateProductItem(item)),
+
   setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
 class Products extends Component {
   state = {
     isShown: false,
-
+    prod: "",
     disabled: true,
+  }
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      prod: this.props.product,
+    })
   }
 
   getPriceLabel = (prices) => {
@@ -35,20 +41,19 @@ class Products extends Component {
   }
 
   setSelectedValue = (attrib, attribute_item) => {
-    let items = JSON.parse(JSON.stringify(this.props.product))
-
+    const items = { ...this.state.prod }
     items.attributes[attrib].selected = attribute_item.value
-    console.log(items)
-    this.props.updateProduct(items)
+
     this.setState({
       ...this.state,
+      prod: items,
       disabled: false,
     })
   }
 
   addToCartHandler = (e) => {
     e.preventDefault()
-    this.props.addItemsToCart(this.props.product)
+    this.props.addItemsToCart(this.state.prod)
     this.setState({
       ...this.state,
       isShown: false,
@@ -89,7 +94,7 @@ class Products extends Component {
           )}
           {this.state.isShown && (
             <div>
-              {this.props.product.attributes.map((attribute, attrib) => (
+              {this.state.prod.attributes.map((attribute, attrib) => (
                 <div key={attrib}>
                   <p className={styles.bold}>{attribute.name}:</p>
                   <div className={styles.attributes}>

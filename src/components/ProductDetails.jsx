@@ -1,16 +1,15 @@
 import React, { Component } from "react"
 import styles from "./ProductDetails.module.css"
 import { connect } from "react-redux"
-import { addToCart, setTotalAmt, updateProductItem } from "../store/actions"
+import { addToCart, setTotalAmt } from "../store/actions"
 import { Markup } from "interweave"
-import { Navigate, Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   currency: state.cart.currency,
 })
 const mapDispatchToProps = (dispatch) => ({
   addItemsToCart: (item) => dispatch(addToCart(item)),
-  updateProduct: (item) => dispatch(updateProductItem(item)),
   setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
@@ -22,7 +21,7 @@ class ProductDetails extends Component {
     redirect: false,
   }
   setSelectedValue = (attrib, attribute_item) => {
-    const items = this.state.prod
+    const items = { ...this.state.prod }
     items.attributes[attrib].selected = attribute_item.value
     console.log(items)
 

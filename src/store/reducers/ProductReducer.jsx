@@ -12,17 +12,16 @@ const productReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
     case GET_PRODUCTS:
-      console.log("payload", payload)
       const updated = {
         ...payload,
         products: payload.products.map((product) => {
           return {
             ...product,
-           quantity: 1, 
+            quantity: 1,
           }
         }),
       }
-      console.log("updated", updated)
+
       return {
         ...state,
         products: updated,
@@ -33,22 +32,7 @@ const productReducer = (state = initialState, action) => {
         isError: true,
         errorMsg: payload,
       }
-    case UPDATE_PRODUCT_ITEM:
-      let productToBeUpdated = payload
-      const existingProductToBeUpdatedIndex = state.products.products.findIndex(
-        (product) => product.id === productToBeUpdated.id
-      )
-      let updatedItems = {
-        ...state.products,
-        products: [...state.products.products],
-      }
-      updatedItems.products[existingProductToBeUpdatedIndex] =
-        productToBeUpdated
 
-      return {
-        ...state,
-        products: updatedItems,
-      }
     default:
       return state
   }

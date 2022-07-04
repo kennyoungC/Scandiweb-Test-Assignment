@@ -32,7 +32,6 @@ const CartReducer = (state = initialState, action) => {
   switch (type) {
     case ADD_TO_CART:
       let newProduct = payload
-      console.log("newly cartItem", payload)
 
       const existingProductIndex = state.cartItems.findIndex(
         (product) =>
@@ -131,7 +130,7 @@ const CartReducer = (state = initialState, action) => {
             product.quantity,
         }
       })
-      console.log("newCartItems", newCartItems)
+
       const AlltotalPrice = newCartItems.reduce(
         (acc, item) => acc + item.totalPrice,
         0

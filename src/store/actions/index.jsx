@@ -44,10 +44,7 @@ export const removeCartItems = (id) => ({
   type: REMOVE_CART_ITEM,
   payload: id,
 })
-export const updateProductItem = (prod) => ({
-  type: UPDATE_PRODUCT_ITEM,
-  payload: prod,
-})
+
 export const toggleCart = () => ({
   type: TOGGLECART,
 })
