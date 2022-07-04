@@ -50,10 +50,6 @@ class CartItems extends Component {
                 {this.props.currency.symbol}
                 {this.getPriceLabel(this.props.item.prices).toFixed(2)}
                 <br />
-                {(
-                  this.getPriceLabel(this.props.item.prices) *
-                  this.props.item.quantity
-                ).toFixed(2)}
               </p>
 
               {this.props.item.attributes.map((attribute, attrib) => (

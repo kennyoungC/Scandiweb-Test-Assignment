@@ -21,9 +21,8 @@ class ProductDetails extends Component {
     redirect: false,
   }
   setSelectedValue = (attrib, attribute_item) => {
-    const items = { ...this.state.prod }
+    const items = JSON.parse(JSON.stringify(this.state.prod))
     items.attributes[attrib].selected = attribute_item.value
-    console.log(items)
 
     this.setState({ ...this.state, prod: items })
   }

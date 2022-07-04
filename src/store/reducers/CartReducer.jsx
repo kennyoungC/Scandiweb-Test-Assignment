@@ -16,17 +16,6 @@ const initialState = {
   },
 }
 
-// const getPriceLabel = (prices) => {
-//   let price_ = 0
-//   prices.forEach((price) => {
-//     if (price.currency.label === state.currency.label) {
-//       price_ = price.amount
-//       return
-//     }
-//   })
-//   return price_
-// }
-
 const CartReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
@@ -59,15 +48,11 @@ const CartReducer = (state = initialState, action) => {
 
         addedItems = [...state.cartItems, newestProduct]
       }
-      // const AlltotalPrice = addedItems.reduce(
-      //   (acc, item) => acc + item.totalPrice,
-      //   0
-      // )
+
       return {
         ...state,
         cartItems: addedItems,
         totalQuantity: state.totalQuantity + 1,
-        // AlltotalPrice,
       }
 
     case REMOVE_CART_ITEM:

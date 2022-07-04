@@ -19,14 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
 class Products extends Component {
   state = {
     isShown: false,
-    prod: "",
+    prod: this.props.product,
     disabled: true,
-  }
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      prod: this.props.product,
-    })
   }
 
   getPriceLabel = (prices) => {
@@ -41,7 +35,7 @@ class Products extends Component {
   }
 
   setSelectedValue = (attrib, attribute_item) => {
-    const items = { ...this.state.prod }
+    const items = JSON.parse(JSON.stringify(this.state.prod))
     items.attributes[attrib].selected = attribute_item.value
 
     this.setState({
@@ -57,6 +51,7 @@ class Products extends Component {
     this.setState({
       ...this.state,
       isShown: false,
+      prod: this.props.product,
     })
     this.props.setTotalAmount()
   }

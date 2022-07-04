@@ -11,11 +11,7 @@ import {
   CLOSE_CURRENCY_MENU,
   TOGGLE_CURRENCY_MENU,
 } from "../reducers/CurrencyReducer"
-import {
-  GET_PRODUCTS,
-  SET_ERROR,
-  UPDATE_PRODUCT_ITEM,
-} from "../reducers/ProductReducer"
+import { GET_PRODUCTS, SET_ERROR } from "../reducers/ProductReducer"
 
 export const getAllProducts = (products) => ({
   type: GET_PRODUCTS,
