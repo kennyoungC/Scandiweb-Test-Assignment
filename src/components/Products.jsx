@@ -49,7 +49,6 @@ class Products extends Component {
   addToCartHandler = (e) => {
     e.preventDefault()
     this.props.addItemsToCart(this.props.product)
-
     this.setState({
       ...this.state,
       isShown: false,
