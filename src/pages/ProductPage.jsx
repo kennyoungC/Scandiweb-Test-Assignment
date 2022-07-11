@@ -1,38 +1,9 @@
 import React, { Component } from "react"
-import { request, gql } from "graphql-request"
+import { request } from "graphql-request"
 import ProductDetails from "../components/ProductDetails"
 import { withRouter } from "react-router-dom"
+import { productDetailsQuery } from "../queries"
 
-const query = (productId) => gql`
-    {
-      product(id: "${productId}") {
-        id
-        category
-        name
-        brand
-        gallery
-        inStock
-        description
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  `
 class ProductPage extends Component {
   state = {
     product: null,
@@ -41,7 +12,7 @@ class ProductPage extends Component {
   componentDidMount() {
     const studentId = this.props.match.params.productId
 
-    request("http://localhost:4000/", query(studentId))
+    request("http://localhost:4000/", productDetailsQuery(studentId))
       .then(({ product }) =>
         this.setState({ product: { ...product, quantity: 1 } })
       )

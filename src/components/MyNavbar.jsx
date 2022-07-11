@@ -12,6 +12,8 @@ import {
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
 import styled from "styled-components"
 import MiniCart from "./Cart/MiniCart"
+import { categoriesQuery, currencyQuery } from "../queries"
+import request from "graphql-request"
 
 const mapStateToProps = (state) => ({
   isOpen: state.currency.isOpen,
@@ -30,35 +32,25 @@ const mapDispatchToProps = (dispatch) => ({
   setTotalAmount: () => dispatch(setTotalAmt()),
 })
 
-const curencies = [
-  {
-    label: "USD",
-    symbol: "$",
-  },
-  {
-    label: "GBP",
-    symbol: "£",
-  },
-  {
-    label: "AUD",
-    symbol: "A$",
-  },
-  {
-    label: "JPY",
-    symbol: "¥",
-  },
-  {
-    label: "RUB",
-    symbol: "₽",
-  },
-]
-
 class MyNavbar extends Component {
+  state = {
+    categories: [],
+    currencies: [],
+  }
   componentDidUpdate(prevProps) {
     if (prevProps.currency !== this.props.currency) {
       console.log("currency changed")
       this.props.setTotalAmount()
     }
+  }
+  componentDidMount() {
+    request("http://localhost:4000/", categoriesQuery)
+      .then(({ categories }) => this.setState({ ...this.state, categories }))
+      .catch((err) => console.log(err))
+
+    request("http://localhost:4000/", currencyQuery)
+      .then(({ currencies }) => this.setState({ ...this.state, currencies }))
+      .catch((err) => console.log(err))
   }
   toggleCurrencyMenuHandler = () => {
     this.props.toggleCurrencyMenuHandler()
@@ -69,21 +61,17 @@ class MyNavbar extends Component {
     return (
       <div className={styles.navbar}>
         <ul className={styles.navLinks}>
-          <li>
-            <NavLink exact activeClassName={styles.active} to={"/"}>
-              all
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName={styles.active} to={"/tech"}>
-              tech
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName={styles.active} to={"/clothes"}>
-              clothes
-            </NavLink>
-          </li>
+          {this.state.categories.map((category, key) => (
+            <li key={key}>
+              <NavLink
+                exact
+                activeClassName={styles.active}
+                to={`/${category.name}`}
+              >
+                {category.name}
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         <div>
@@ -114,7 +102,7 @@ class MyNavbar extends Component {
             )}
             {this.props.isOpen && (
               <Ul>
-                {curencies.map((currency, i) => (
+                {this.state.currencies.map((currency, i) => (
                   <li key={i} onClick={() => this.props.setCurrency(currency)}>
                     {currency.symbol} {currency.label}
                   </li>

@@ -19,6 +19,9 @@ class Home extends Component {
           <Route exact path="/">
             <ProductListingPage />
           </Route>
+          <Route exact path="/all">
+            <ProductListingPage />
+          </Route>
           <Route exact path="/cart">
             <CartPage />
           </Route>

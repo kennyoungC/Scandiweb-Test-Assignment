@@ -2,8 +2,9 @@ import { Component } from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import Products from "./Products"
-import { request, gql } from "graphql-request"
+import { request } from "graphql-request"
 import { closeCart, getAllProducts, setError } from "../store/actions"
+import { query } from "../queries"
 
 const mapStateToProps = (state) => ({
   allProducts: state.productList.products.products || [],
@@ -16,38 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
   setError: (message) => dispatch(setError(message)),
   closeCart: () => dispatch(closeCart()),
 })
-const query = gql`
-  {
-    category {
-      name
-      products {
-        category
-        id
-        name
-        brand
-        inStock
-        gallery
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  }
-`
+
 class ProductListingPage extends Component {
   state = {
     isLoading: false,
