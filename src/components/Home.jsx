@@ -44,7 +44,7 @@ export default Home
 const Sticky = styled.div`
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
   background-color: #fff;
   width: 100%;
   margin: 16px 0;

@@ -3,14 +3,20 @@ import styled from "styled-components"
 
 import { connect } from "react-redux"
 import Products from "../components/Products"
+import { closeCart } from "../store/actions"
 
 const mapStateToProps = (state) => ({
   clothesProducts: state.productList.products.products.filter(
     (prod) => prod.category === "clothes"
   ),
 })
-
+const mapDispatchToProps = (dispatch) => ({
+  closeCart: () => dispatch(closeCart()),
+})
 class ClothesPage extends Component {
+  componentDidMount() {
+    this.props.closeCart()
+  }
   render() {
     return (
       <div>
@@ -27,7 +33,7 @@ class ClothesPage extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ClothesPage)
+export default connect(mapStateToProps, mapDispatchToProps)(ClothesPage)
 const Row = styled.div`
   display: grid;
   align-items: center;

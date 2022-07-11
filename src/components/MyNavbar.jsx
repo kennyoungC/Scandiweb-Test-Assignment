@@ -10,6 +10,7 @@ import {
   toggleCurrencyMenu,
 } from "../store/actions"
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
+import styled from "styled-components"
 import MiniCart from "./Cart/MiniCart"
 
 const mapStateToProps = (state) => ({
@@ -59,6 +60,10 @@ class MyNavbar extends Component {
       this.props.setTotalAmount()
     }
   }
+  toggleCurrencyMenuHandler = () => {
+    this.props.toggleCurrencyMenuHandler()
+    this.props.closeCart()
+  }
 
   render() {
     return (
@@ -85,46 +90,42 @@ class MyNavbar extends Component {
           <span className={styles.logo}>{iconLogo}</span>
         </div>
         <div className={styles.action}>
+          {/* beginning of currency menu */}
           <div className={styles.currencyMenu}>
             {this.props.isOpen && (
               <>
-                <button onClick={this.props.toggleCurrencyMenuHandler}>
+                <button onClick={this.toggleCurrencyMenuHandler}>
                   <span className={styles.currency}>
                     {" "}
-                    {this.props.currency.symbol}{" "}
+                    {this.props.currency.symbol}
+                    {""}
                   </span>{" "}
                   {arrowUp}
                 </button>
               </>
             )}
             {!this.props.isOpen && (
-              <button onClick={this.props.toggleCurrencyMenuHandler}>
+              <button onClick={this.toggleCurrencyMenuHandler}>
                 <span className={styles.currency}>
                   {this.props.currency.symbol}{" "}
                 </span>{" "}
                 {arrowDown}
               </button>
             )}
-            <ul
-              style={{
-                opacity: this.props.isOpen ? 1 : 0,
-                pointerEvents: this.props.isOpen ? "all" : "none",
-              }}
-              className={styles.currencyList}
-            >
-              {curencies.map((currency, i) => (
-                <li key={i} onClick={() => this.props.setCurrency(currency)}>
-                  {currency.symbol} {currency.label}
-                </li>
-              ))}
-            </ul>
+            {this.props.isOpen && (
+              <Ul>
+                {curencies.map((currency, i) => (
+                  <li key={i} onClick={() => this.props.setCurrency(currency)}>
+                    {currency.symbol} {currency.label}
+                  </li>
+                ))}
+              </Ul>
+            )}
           </div>
+          {/* end of currency menu */}
+
           {this.props.openCart && (
-            <span
-              style={{ overflow: this.props.openCart ? "hidden" : "scroll" }}
-              onClick={() => this.props.closeCart()}
-              className={styles.overlay}
-            ></span>
+            <Overlay onClick={() => this.props.closeCart()}></Overlay>
           )}
           <div className={styles.cart}>
             <button onClick={() => this.props.toggleOpen()}>{cartIcon}</button>
@@ -175,3 +176,44 @@ class MyNavbar extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyNavbar)
+
+const Ul = styled.ul`
+  z-index: 10;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+
+  padding: 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-35%, 10%);
+  animation: all 0.4s ease-out;
+  opacity: 1;
+  pointer-events: all;
+
+  li {
+    width: 57px;
+    padding: 8px 24px;
+    cursor: pointer;
+  }
+  li:hover {
+    background-color: #ccc;
+  }
+`
+const Overlay = styled.span`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 9%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  overflow: scroll;
+`

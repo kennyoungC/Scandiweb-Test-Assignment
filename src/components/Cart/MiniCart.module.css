@@ -45,9 +45,13 @@ ul {
   padding: 2px 6px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
-/* .color-box button:hover {
+.selected-color {
   border: 2px solid #5ece7b;
-} */
+}
+.selected-size {
+  background-color: #1d1f22;
+  color: #fff;
+}
 .color-box p {
   margin: 8px 0;
 }
@@ -66,4 +70,9 @@ ul {
   border: 1px solid #1d1f22;
   height: 20px;
   width: 20px;
+}
+.product-img {
+  width: 150px;
+  height: 220px;
+  object-fit: cover;
 }

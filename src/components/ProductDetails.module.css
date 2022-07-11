@@ -13,19 +13,37 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-height: 430px;
+  overflow-y: scroll;
+}
+.side-imgs::-webkit-scrollbar {
+  display: none;
 }
 .side-imgs img {
   width: 90px;
   height: 90px;
+  object-fit: contain;
   cursor: pointer;
 }
+/* .main-img img {
+  width: 480px;
+  height: 500px;
+} */
 .main-img img {
-  width: 550px;
-  height: 550px;
+  max-width: 500px;
+  max-height: 430px;
+  object-fit: contain;
 }
 .attributes {
   display: flex;
   gap: 6px;
+}
+.selected-color {
+  border: 2px solid #5ece7b;
+}
+.selected-size {
+  background-color: #1d1f22;
+  color: #fff;
 }
 .size-box {
   display: flex;

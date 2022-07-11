@@ -3,7 +3,6 @@ import styles from "./ProductDetails.module.css"
 import { connect } from "react-redux"
 import { addToCart, setTotalAmt } from "../store/actions"
 import { Markup } from "interweave"
-import { Redirect } from "react-router-dom"
 
 const mapStateToProps = (state) => ({
   currency: state.cart.currency,
@@ -16,9 +15,8 @@ const mapDispatchToProps = (dispatch) => ({
 class ProductDetails extends Component {
   state = {
     selectedImage: this.props.product.gallery[0],
-
+    disabled: true,
     prod: this.props.product,
-    redirect: false,
   }
   setSelectedValue = (attrib, attribute_item) => {
     const items = JSON.parse(JSON.stringify(this.state.prod))
@@ -36,14 +34,40 @@ class ProductDetails extends Component {
     })
     return price_
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.prod.attributes !== this.state.prod.attributes) {
+      if (
+        this.props.product.inStock &&
+        this.state.prod.attributes.every((attribute) => attribute.selected)
+      ) {
+        this.setState({ ...this.state, disabled: false })
+      }
+    }
+  }
 
   addToCartHadler = (e) => {
     e.preventDefault()
     this.props.addItemsToCart(this.state.prod)
-    this.setState({ ...this.state, redirect: true })
-
     this.props.setTotalAmount()
+    this.setState({
+      ...this.state,
+      redirect: true,
+      prod: this.props.product,
+      disabled: true,
+    })
   }
+  // check = () => {
+  //   //  const isValid = false
+  //   if (
+  //     this.props.product.inStock &&
+  //     this.state.prod.attributes.every((attribute) => attribute.selected)
+  //   ) {
+  //     this.setState({ ...this.state, disabled: false })
+  //   }
+  // }
+  // allSeleted = () => this.state.prod.attributes.every((attribute) => attribute.selected)
+  // if(this.props.product.inStock && allSeleted()){}
+
   render() {
     return (
       <div className={styles.layout}>
@@ -76,12 +100,13 @@ class ProductDetails extends Component {
                       return (
                         <div key={i} className={styles["color-box"]}>
                           <button
+                            className={
+                              attribute.selected === item.value
+                                ? styles["selected-color"]
+                                : ""
+                            }
                             style={{
                               backgroundColor: item.value,
-                              border:
-                                attribute.selected === item.value
-                                  ? "2px solid #5ECE7B"
-                                  : "",
                             }}
                             onClick={() => this.setSelectedValue(attrib, item)}
                           ></button>
@@ -91,16 +116,11 @@ class ProductDetails extends Component {
                       return (
                         <div key={i} className={styles["size-box"]}>
                           <button
-                            style={{
-                              backgroundColor:
-                                attribute.selected === item.value
-                                  ? "#1d1f22"
-                                  : "",
-                              color:
-                                attribute.selected === item.value
-                                  ? "white"
-                                  : "",
-                            }}
+                            className={
+                              attribute.selected === item.value
+                                ? styles["selected-size"]
+                                : ""
+                            }
                             onClick={() => this.setSelectedValue(attrib, item)}
                           >
                             {item.value}
@@ -119,14 +139,25 @@ class ProductDetails extends Component {
               </span>
             </div>
             <form onSubmit={this.addToCartHadler}>
-              <button className={styles["addToCart-btn"]}>ADD TO CART</button>
+              {this.props.product.inStock ? (
+                <button
+                  disabled={this.state.disabled}
+                  className={styles["addToCart-btn"]}
+                >
+                  ADD TO CART
+                </button>
+              ) : (
+                <button disabled={true} className={styles["addToCart-btn"]}>
+                  OUT OF STOCK
+                </button>
+              )}
             </form>
           </div>
           <div className={styles.description}>
             <Markup content={this.props.product.description} />;
           </div>
         </div>
-        {this.state.redirect && <Redirect to="/" />}
+        {/* {this.state.redirect && <Redirect to="/" />} */}
       </div>
     )
   }

@@ -61,12 +61,13 @@ class CartItems extends Component {
                         return (
                           <div key={i} className={styles["color-box"]}>
                             <span
+                              className={
+                                attribute.selected === item.value
+                                  ? styles["selected-color"]
+                                  : ""
+                              }
                               style={{
                                 backgroundColor: item.value,
-                                border:
-                                  attribute.selected === item.value
-                                    ? "2px solid #5ECE7B"
-                                    : "",
                               }}
                             ></span>
                           </div>
@@ -75,16 +76,11 @@ class CartItems extends Component {
                         return (
                           <div key={i} className={styles["size-box"]}>
                             <span
-                              style={{
-                                backgroundColor:
-                                  attribute.selected === item.value
-                                    ? "#1d1f22"
-                                    : "",
-                                color:
-                                  attribute.selected === item.value
-                                    ? "white"
-                                    : "",
-                              }}
+                              className={
+                                attribute.selected === item.value
+                                  ? styles["selected-size"]
+                                  : ""
+                              }
                             >
                               {item.value}
                             </span>
