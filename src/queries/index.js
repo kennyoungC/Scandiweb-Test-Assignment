@@ -77,3 +77,32 @@ export const currencyQuery = gql`
     }
   }
 `
+export const clothesQuery = gql`
+  {
+    category(input: { title: "clothes" }) {
+      name
+      products {
+        id
+        name
+        inStock
+        gallery
+        description
+        category
+        attributes {
+          id
+          name
+
+          type
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+        brand
+      }
+    }
+  }
+`

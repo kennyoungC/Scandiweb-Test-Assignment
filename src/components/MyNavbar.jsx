@@ -39,7 +39,6 @@ class MyNavbar extends Component {
   }
   componentDidUpdate(prevProps) {
     if (prevProps.currency !== this.props.currency) {
-      console.log("currency changed")
       this.props.setTotalAmount()
     }
   }
@@ -61,8 +60,8 @@ class MyNavbar extends Component {
     return (
       <div className={styles.navbar}>
         <ul className={styles.navLinks}>
-          {this.state.categories.map((category, key) => (
-            <li key={key}>
+          {this.state.categories.map((category) => (
+            <li key={category.name}>
               <NavLink
                 exact
                 activeClassName={styles.active}

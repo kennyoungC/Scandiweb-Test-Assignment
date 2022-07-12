@@ -7,6 +7,7 @@ import TechPage from "../pages/TechPage"
 import ClothesPage from "../pages/ClothesPage"
 import ProductPage from "../pages/ProductPage"
 import styled from "styled-components"
+import WelcomePage from "../pages/WelcomePage"
 
 class Home extends Component {
   render() {
@@ -17,7 +18,7 @@ class Home extends Component {
         </Sticky>
         <Switch>
           <Route exact path="/">
-            <ProductListingPage />
+            <WelcomePage />
           </Route>
           <Route exact path="/all">
             <ProductListingPage />
