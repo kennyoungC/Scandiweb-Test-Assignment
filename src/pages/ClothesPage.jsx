@@ -5,13 +5,8 @@ import { connect } from "react-redux"
 import Products from "../components/Products"
 import { closeCart } from "../store/actions"
 import request from "graphql-request"
-import { categoryQuery, clothesQuery } from "../queries"
+import { clothesQuery } from "../queries"
 
-const mapStateToProps = (state) => ({
-  clothesProducts: state.productList.products.products.filter(
-    (prod) => prod.category === "clothes"
-  ),
-})
 const mapDispatchToProps = (dispatch) => ({
   closeCart: () => dispatch(closeCart()),
 })
@@ -29,7 +24,6 @@ class ClothesPage extends Component {
     try {
       const response = await request("http://localhost:4000/", clothesQuery)
       const data = await response.category
-      console.log(data)
       this.setState({ ...this.state, products: data })
     } catch (error) {
       console.log(error)
@@ -56,7 +50,7 @@ class ClothesPage extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClothesPage)
+export default connect((s) => s, mapDispatchToProps)(ClothesPage)
 const Row = styled.div`
   display: grid;
   align-items: center;

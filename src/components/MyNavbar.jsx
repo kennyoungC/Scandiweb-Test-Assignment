@@ -43,14 +43,31 @@ class MyNavbar extends Component {
     }
   }
   componentDidMount() {
-    request("http://localhost:4000/", categoriesQuery)
-      .then(({ categories }) => this.setState({ ...this.state, categories }))
-      .catch((err) => console.log(err))
-
-    request("http://localhost:4000/", currencyQuery)
-      .then(({ currencies }) => this.setState({ ...this.state, currencies }))
-      .catch((err) => console.log(err))
+    this.getCategories()
+    this.getCurrencies()
+    console.log(this.state.categories)
+    console.log(this.state.categories)
   }
+
+  getCategories = async () => {
+    try {
+      const response = await request("http://localhost:4000/", categoriesQuery)
+      const data = await response.categories
+      this.setState({ ...this.state, categories: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  getCurrencies = async () => {
+    try {
+      const response = await request("http://localhost:4000/", currencyQuery)
+      const data = await response.currencies
+      this.setState({ ...this.state, currencies: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   toggleCurrencyMenuHandler = () => {
     this.props.toggleCurrencyMenuHandler()
     this.props.closeCart()

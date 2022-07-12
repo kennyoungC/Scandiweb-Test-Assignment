@@ -12,7 +12,8 @@ const persistConfig = {
   storage: storageSession,
   transforms: [
     encryptTransform({
-      secretKey: process.env.REACT_APP_SECRET_NAME,
+      // encrypt the data with a public password so it won't throw an error
+      secretKey: "my-super-secret-key",
       onError: (error) => {
         console.log(error)
       },

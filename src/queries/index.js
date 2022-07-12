@@ -106,3 +106,32 @@ export const clothesQuery = gql`
     }
   }
 `
+export const techQuery = gql`
+  {
+    category(input: { title: "tech" }) {
+      name
+      products {
+        id
+        name
+        inStock
+        gallery
+        description
+        category
+        attributes {
+          id
+          name
+
+          type
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+        brand
+      }
+    }
+  }
+`
