@@ -1,5 +1,5 @@
 .cart-list {
-  list-style: none;
+  list-style: none !important;
   padding: 12px 0;
 }
 .order {

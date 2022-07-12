@@ -20,13 +20,15 @@ class ProductPage extends Component {
   }
   render() {
     return (
-      <div>
-        {this.state.product === null ? (
-          <div>Loading...</div>
-        ) : (
-          <ProductDetails product={this.state.product} />
-        )}
-      </div>
+      <>
+        <div>
+          {this.state.product === null ? (
+            <div>Loading...</div>
+          ) : (
+            <ProductDetails product={this.state.product} />
+          )}
+        </div>
+      </>
     )
   }
 }

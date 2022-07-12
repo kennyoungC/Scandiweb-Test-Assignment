@@ -6,16 +6,42 @@ import CartPage from "../pages/CartPage"
 import TechPage from "../pages/TechPage"
 import ClothesPage from "../pages/ClothesPage"
 import ProductPage from "../pages/ProductPage"
-import styled from "styled-components"
 import WelcomePage from "../pages/WelcomePage"
+import request from "graphql-request"
+import { categoriesQuery } from "../queries"
+import { withRouter } from "react-router-dom"
 
 class Home extends Component {
+  state = {
+    categories: [],
+  }
+
+  componentDidMount() {
+    this.getCategories()
+  }
+
+  getCategories = async () => {
+    try {
+      const response = await request("http://localhost:4000/", categoriesQuery)
+      const data = await response.categories
+      this.setState({ ...this.state, categories: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  showNavBar = () => {
+    if (this.props.match.path === "/" && this.props.location.pathname === "/") {
+      return <h1>Welcome to the Scandiweb Test Assignment</h1>
+    }
+    if (this.props.location.pathname !== "/") {
+      return <MyNavbar categories={this.state.categories} />
+    }
+  }
+
   render() {
     return (
       <div className="container">
-        <Sticky>
-          <MyNavbar />
-        </Sticky>
+        {this.showNavBar()}
         <Switch>
           <Route exact path="/">
             <WelcomePage />
@@ -44,12 +70,4 @@ class Home extends Component {
   }
 }
 
-export default Home
-const Sticky = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #fff;
-  width: 100%;
-  margin: 16px 0;
-`
+export default withRouter(Home)

@@ -12,7 +12,7 @@ import {
 import { arrowDown, arrowUp, cartIcon, iconLogo } from "./UI/Icons"
 import styled from "styled-components"
 import MiniCart from "./Cart/MiniCart"
-import { categoriesQuery, currencyQuery } from "../queries"
+import { currencyQuery } from "../queries"
 import request from "graphql-request"
 
 const mapStateToProps = (state) => ({
@@ -34,7 +34,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 class MyNavbar extends Component {
   state = {
-    categories: [],
     currencies: [],
   }
   componentDidUpdate(prevProps) {
@@ -43,21 +42,9 @@ class MyNavbar extends Component {
     }
   }
   componentDidMount() {
-    this.getCategories()
     this.getCurrencies()
-    console.log(this.state.categories)
-    console.log(this.state.categories)
   }
 
-  getCategories = async () => {
-    try {
-      const response = await request("http://localhost:4000/", categoriesQuery)
-      const data = await response.categories
-      this.setState({ ...this.state, categories: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
   getCurrencies = async () => {
     try {
       const response = await request("http://localhost:4000/", currencyQuery)
@@ -75,106 +62,113 @@ class MyNavbar extends Component {
 
   render() {
     return (
-      <div className={styles.navbar}>
-        <ul className={styles.navLinks}>
-          {this.state.categories.map((category) => (
-            <li key={category.name}>
-              <NavLink
-                exact
-                activeClassName={styles.active}
-                to={`/${category.name}`}
-              >
-                {category.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+      <Sticky>
+        <div className={styles.navbar}>
+          <ul className={styles.navLinks}>
+            {this.props.categories.map((category) => (
+              <li key={category.name}>
+                <NavLink
+                  exact
+                  activeClassName={styles.active}
+                  to={`/${category.name}`}
+                >
+                  {category.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
 
-        <div>
-          <span className={styles.logo}>{iconLogo}</span>
-        </div>
-        <div className={styles.action}>
-          {/* beginning of currency menu */}
-          <div className={styles.currencyMenu}>
-            {this.props.isOpen && (
-              <>
+          <div>
+            <span className={styles.logo}>{iconLogo}</span>
+          </div>
+          <div className={styles.action}>
+            {/* beginning of currency menu */}
+            <div className={styles.currencyMenu}>
+              {this.props.isOpen && (
+                <>
+                  <button onClick={this.toggleCurrencyMenuHandler}>
+                    <span className={styles.currency}>
+                      {" "}
+                      {this.props.currency.symbol}
+                      {""}
+                    </span>{" "}
+                    {arrowUp}
+                  </button>
+                </>
+              )}
+              {!this.props.isOpen && (
                 <button onClick={this.toggleCurrencyMenuHandler}>
                   <span className={styles.currency}>
-                    {" "}
-                    {this.props.currency.symbol}
-                    {""}
+                    {this.props.currency.symbol}{" "}
                   </span>{" "}
-                  {arrowUp}
+                  {arrowDown}
                 </button>
-              </>
-            )}
-            {!this.props.isOpen && (
-              <button onClick={this.toggleCurrencyMenuHandler}>
-                <span className={styles.currency}>
-                  {this.props.currency.symbol}{" "}
-                </span>{" "}
-                {arrowDown}
-              </button>
-            )}
-            {this.props.isOpen && (
-              <Ul>
-                {this.state.currencies.map((currency, i) => (
-                  <li key={i} onClick={() => this.props.setCurrency(currency)}>
-                    {currency.symbol} {currency.label}
-                  </li>
-                ))}
-              </Ul>
-            )}
-          </div>
-          {/* end of currency menu */}
-
-          {this.props.openCart && (
-            <Overlay onClick={() => this.props.closeCart()}></Overlay>
-          )}
-          <div className={styles.cart}>
-            <button onClick={() => this.props.toggleOpen()}>{cartIcon}</button>
-            {this.props.cartItems.length > 0 && (
-              <span className={styles.cartNum}>
-                {this.props.totalCartItems}
-              </span>
-            )}
+              )}
+              {this.props.isOpen && (
+                <Ul>
+                  {this.state.currencies.map((currency, i) => (
+                    <li
+                      key={i}
+                      onClick={() => this.props.setCurrency(currency)}
+                    >
+                      {currency.symbol} {currency.label}
+                    </li>
+                  ))}
+                </Ul>
+              )}
+            </div>
+            {/* end of currency menu */}
 
             {this.props.openCart && (
-              <div className={styles.minicart}>
-                {this.props.cartItems.length === 0 ? (
-                  <p className={styles.emptyCart}>cart is empty 🙂</p>
-                ) : (
-                  <>
-                    <div>
-                      <p className={styles.myBag}>
-                        <span className={styles.bold}>My Bag</span>{" "}
-                        {this.props.totalCartItems} items
-                      </p>
-                    </div>
-                    {this.props.cartItems.map((cart, key) => (
-                      <MiniCart index={key} item={cart} key={key} />
-                    ))}
-                    <div className={styles.total}>
-                      <p>Total</p>
-                      <p>
-                        {" "}
-                        {this.props.currency.symbol}
-                        {this.props.totalPrice.toFixed(2)}
-                      </p>
-                    </div>
-                    <div className={styles.btnAction}>
-                      <Link to={"/cart"}>
-                        <button>VIEW BAG</button>
-                      </Link>
-                      <button>CHECKOUT</button>
-                    </div>
-                  </>
-                )}
-              </div>
+              <Overlay onClick={() => this.props.closeCart()}></Overlay>
             )}
+            <div className={styles.cart}>
+              <button onClick={() => this.props.toggleOpen()}>
+                {cartIcon}
+              </button>
+              {this.props.cartItems.length > 0 && (
+                <span className={styles.cartNum}>
+                  {this.props.totalCartItems}
+                </span>
+              )}
+
+              {this.props.openCart && (
+                <div className={styles.minicart}>
+                  {this.props.cartItems.length === 0 ? (
+                    <p className={styles.emptyCart}>cart is empty 🙂</p>
+                  ) : (
+                    <>
+                      <div>
+                        <p className={styles.myBag}>
+                          <span className={styles.bold}>My Bag</span>{" "}
+                          {this.props.totalCartItems} items
+                        </p>
+                      </div>
+                      {this.props.cartItems.map((cart, key) => (
+                        <MiniCart index={key} item={cart} key={key} />
+                      ))}
+                      <div className={styles.total}>
+                        <p>Total</p>
+                        <p>
+                          {" "}
+                          {this.props.currency.symbol}
+                          {this.props.totalPrice.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className={styles.btnAction}>
+                        <Link to={"/cart"}>
+                          <button>VIEW BAG</button>
+                        </Link>
+                        <button>CHECKOUT</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </Sticky>
     )
   }
 }
@@ -220,4 +214,12 @@ const Overlay = styled.span`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
   overflow: scroll;
+`
+const Sticky = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  width: 100%;
+  margin: 16px 0;
 `

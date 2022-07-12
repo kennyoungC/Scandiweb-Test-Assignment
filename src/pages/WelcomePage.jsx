@@ -16,9 +16,8 @@ class WelcomePage extends Component {
   render() {
     return (
       <div>
-        <h1>Welcome to the Scandiweb Test Assignment</h1>
-        <p>Here are the list of Categories to explore</p>
-        <ul>
+        <h3>Here are the list of Categories of Product to explore:</h3>
+        <ul className="category-list">
           {this.state.categories.map((category) => (
             <li key={category.name}>
               <NavLink exact to={`/${category.name}`}>

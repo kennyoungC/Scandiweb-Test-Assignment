@@ -20,3 +20,16 @@ code {
   margin: 0 auto;
   padding: 0 48px;
 }
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: disc;
+}
+.category-list li {
+  font-size: 27px;
+  text-transform: uppercase;
+}
+.category-list li:hover {
+  text-decoration: underline;
+}
