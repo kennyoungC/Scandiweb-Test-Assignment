@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-
+import { compose } from "redux"
 import { connect } from "react-redux"
 import Products from "../components/Products"
 import { closeCart } from "../store/actions"
 import request from "graphql-request"
-import { clothesQuery } from "../queries"
+import { catQuery } from "../queries"
+import { withRouter } from "react-router-dom"
 
 const mapDispatchToProps = (dispatch) => ({
   closeCart: () => dispatch(closeCart()),
@@ -22,7 +23,10 @@ class ClothesPage extends Component {
 
   getClotes = async () => {
     try {
-      const response = await request("http://localhost:4000/", clothesQuery)
+      const response = await request(
+        "http://localhost:4000/",
+        catQuery(this.props.match.path.slice(1))
+      )
       const data = await response.category
       this.setState({ ...this.state, products: data })
     } catch (error) {
@@ -50,7 +54,10 @@ class ClothesPage extends Component {
   }
 }
 
-export default connect((s) => s, mapDispatchToProps)(ClothesPage)
+export default compose(
+  withRouter,
+  connect((s) => s, mapDispatchToProps)
+)(ClothesPage)
 const Row = styled.div`
   display: grid;
   align-items: center;

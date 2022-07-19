@@ -1,36 +1,4 @@
 import { gql } from "graphql-request"
-export const query = gql`
-  {
-    category {
-      name
-      products {
-        category
-        id
-        name
-        brand
-        inStock
-        gallery
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  }
-`
 
 export const productDetailsQuery = (productId) => gql`
     {
@@ -77,9 +45,12 @@ export const currencyQuery = gql`
     }
   }
 `
-export const clothesQuery = gql`
+
+export const catQuery = (cat) => {
+  return gql`
   {
-    category(input: { title: "clothes" }) {
+    
+    category(input: { title:"${cat}" }) {
       name
       products {
         id
@@ -106,32 +77,4 @@ export const clothesQuery = gql`
     }
   }
 `
-export const techQuery = gql`
-  {
-    category(input: { title: "tech" }) {
-      name
-      products {
-        id
-        name
-        inStock
-        gallery
-        description
-        category
-        attributes {
-          id
-          name
-
-          type
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-        brand
-      }
-    }
-  }
-`
+}

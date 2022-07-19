@@ -4,7 +4,9 @@ import styled from "styled-components"
 import Products from "./Products"
 import { request } from "graphql-request"
 import { closeCart, getAllProducts, setError } from "../store/actions"
-import { query } from "../queries"
+import { catQuery } from "../queries"
+import { withRouter } from "react-router-dom"
+import { compose } from "redux"
 
 const mapStateToProps = (state) => ({
   allProducts: state.productList.products.products || [],
@@ -24,12 +26,13 @@ class ProductListingPage extends Component {
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true })
     const getProducts = async () => {
-      this.setState({ isLoading: true })
       try {
-        request("http://localhost:4000/", query).then((data) =>
-          this.props.getProducts(data.category)
-        )
+        request(
+          "http://localhost:4000/",
+          catQuery(this.props.match.slice(1))
+        ).then((data) => this.props.getProducts(data.category))
         this.setState({ isLoading: false })
       } catch (error) {
         this.props.setError(error.message)
@@ -42,18 +45,16 @@ class ProductListingPage extends Component {
   render() {
     return (
       <>
-        {!this.state.isLoading && (
-          <div>
-            <h1 className="category"> {this.props.category}</h1>
-            <Row>
-              {this.props.allProducts.map((product) => (
-                <div key={product.id}>
-                  <Products product={product} id={product.id} />
-                </div>
-              ))}
-            </Row>
-          </div>
-        )}
+        <div>
+          <h1 className="category"> {this.props.category}</h1>
+          <Row>
+            {this.props.allProducts.map((product) => (
+              <div key={product.id}>
+                <Products product={product} id={product.id} />
+              </div>
+            ))}
+          </Row>
+        </div>
         {this.state.isLoading && <div>Loading...</div>}
         {this.props.isError && !this.state.isLoading && (
           <div>{this.props.errorMsg}</div>
@@ -63,7 +64,10 @@ class ProductListingPage extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListingPage)
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(ProductListingPage)
 const Row = styled.div`
   display: grid;
   align-items: center;

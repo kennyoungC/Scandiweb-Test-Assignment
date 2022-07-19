@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-
+import { withRouter } from "react-router-dom"
+import { compose } from "redux"
 import { connect } from "react-redux"
 import Products from "../components/Products"
 import { closeCart } from "../store/actions"
 import request from "graphql-request"
-import { techQuery } from "../queries"
+import { catQuery } from "../queries"
 
 const mapDispatchToProps = (dispatch) => ({
   closeCart: () => dispatch(closeCart()),
@@ -21,7 +22,10 @@ class TechPage extends Component {
   }
   getTech = async () => {
     try {
-      const response = await request("http://localhost:4000/", techQuery)
+      const response = await request(
+        "http://localhost:4000/",
+        catQuery(this.props.match.path.slice(1))
+      )
       const data = await response.category
 
       this.setState({ ...this.state, products: data })
@@ -49,7 +53,10 @@ class TechPage extends Component {
   }
 }
 
-export default connect((s) => s, mapDispatchToProps)(TechPage)
+export default compose(
+  withRouter,
+  connect((s) => s, mapDispatchToProps)
+)(TechPage)
 const Row = styled.div`
   display: grid;
   align-items: center;
