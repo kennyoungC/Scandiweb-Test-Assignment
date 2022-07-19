@@ -1,9 +1,24 @@
 .layout {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   gap: 48px;
   width: 100%;
   height: 100vh;
+}
+.product-info h1 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 27px;
+}
+.product-info h2 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
 }
 .img-box {
   display: flex;
@@ -13,7 +28,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  max-height: 430px;
+  max-height: 480px;
   overflow-y: scroll;
 }
 .side-imgs::-webkit-scrollbar {
@@ -25,13 +40,10 @@
   object-fit: contain;
   cursor: pointer;
 }
-/* .main-img img {
-  width: 480px;
-  height: 500px;
-} */
+
 .main-img img {
-  max-width: 500px;
-  max-height: 430px;
+  max-width: 550px;
+  max-height: 480px;
   object-fit: contain;
 }
 .attributes {
@@ -52,8 +64,10 @@
 }
 .size-box button {
   border: 1px solid #1d1f22;
-  padding: 6px 12px;
+  /* padding: 6px 12px; */
   margin-top: 6px;
+  width: 63px;
+  height: 45px;
 }
 .size-box button:hover {
   background-color: #1d1f22;
@@ -66,8 +80,8 @@
   gap: 6px;
 }
 .color-box button {
-  height: 36px;
-  width: 36px;
+  width: 63px;
+  height: 45px;
   padding: 4px 9px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
@@ -77,6 +91,7 @@
 
 .bold {
   font-weight: bold;
+  font-size: 18px;
 }
 .addToCart-btn {
   padding: 16px 32px;
@@ -92,15 +107,16 @@
 }
 .price p {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 12px;
 }
 .price span {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 12px;
 }
 .description {
+  font-weight: 400;
   margin: 24px 0;
   max-height: 350px;
   /* overflow-y: scroll; */

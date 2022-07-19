@@ -56,17 +56,6 @@ class ProductDetails extends Component {
       disabled: true,
     })
   }
-  // check = () => {
-  //   //  const isValid = false
-  //   if (
-  //     this.props.product.inStock &&
-  //     this.state.prod.attributes.every((attribute) => attribute.selected)
-  //   ) {
-  //     this.setState({ ...this.state, disabled: false })
-  //   }
-  // }
-  // allSeleted = () => this.state.prod.attributes.every((attribute) => attribute.selected)
-  // if(this.props.product.inStock && allSeleted()){}
 
   render() {
     return (
@@ -154,10 +143,9 @@ class ProductDetails extends Component {
             </form>
           </div>
           <div className={styles.description}>
-            <Markup content={this.props.product.description} />;
+            <Markup content={this.props.product.description} />
           </div>
         </div>
-        {/* {this.state.redirect && <Redirect to="/" />} */}
       </div>
     )
   }
