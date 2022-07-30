@@ -62,7 +62,11 @@ export const catQuery = (cat) => {
         attributes {
           id
           name
-
+          items {
+            displayValue
+            value
+            id
+          }
           type
         }
         prices {

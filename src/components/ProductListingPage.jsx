@@ -31,9 +31,11 @@ class ProductListingPage extends Component {
       try {
         request(
           "http://localhost:4000/",
-          catQuery(this.props.match.slice(1))
-        ).then((data) => this.props.getProducts(data.category))
-        this.setState({ isLoading: false })
+          catQuery(this.props.match.path.slice(1))
+        ).then((data) => {
+          this.props.getProducts(data.category)
+          this.setState({ isLoading: false })
+        })
       } catch (error) {
         this.props.setError(error.message)
       }
@@ -43,6 +45,7 @@ class ProductListingPage extends Component {
   }
 
   render() {
+    // console.log(this.props.allProducts)
     return (
       <>
         <div>
@@ -56,9 +59,9 @@ class ProductListingPage extends Component {
           </Row>
         </div>
         {this.state.isLoading && <div>Loading...</div>}
-        {this.props.isError && !this.state.isLoading && (
+        {/*  {this.props.isError && !this.state.isLoading && (
           <div>{this.props.errorMsg}</div>
-        )}
+        )} */}
       </>
     )
   }
@@ -71,7 +74,7 @@ export default compose(
 const Row = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   row-gap: 48px;
   justify-content: space-between;
 `

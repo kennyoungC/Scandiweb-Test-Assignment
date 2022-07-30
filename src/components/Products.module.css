@@ -66,6 +66,9 @@ a {
   background-color: #1d1f22;
   color: #fff;
 }
+.size-box button:active {
+  transform: scale(1.2);
+}
 .color-box {
   display: flex;
   align-items: center;
@@ -80,6 +83,9 @@ a {
 }
 .color-box button:hover {
   border: 2px solid #5ece7b;
+}
+.color-box button:active {
+  transform: scale(1.2);
 }
 .color-box p {
   margin: 8px 0;

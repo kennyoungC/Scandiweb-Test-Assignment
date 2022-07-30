@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
 class Products extends Component {
   state = {
     isShown: false,
-    prod: this.props.product,
+    prod: [],
     disabled: true,
   }
 
@@ -43,6 +43,9 @@ class Products extends Component {
       ...this.state,
       prod: items,
     })
+  }
+  componentDidMount() {
+    this.setState({ ...this.state, prod: this.props.product })
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.prod.attributes !== this.state.prod.attributes) {
@@ -202,7 +205,7 @@ const CartIcon = styled.button`
   border-radius: 50%;
   color: #fff;
   bottom: 18%;
-  left: 75%;
+  left: 70%;
   transform: translate(50%, 0%);
   opacity: 0;
   animation: all 0.3s ease-out;

@@ -61,7 +61,7 @@ export default compose(
 const Row = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   row-gap: 48px;
   justify-content: space-between;
 `
